@@ -1,7 +1,5 @@
 
-import customtkinter as ctk
 import tkinter as tk
-from customtkinter import CTk, CTkLabel, FontManager, CTkCanvas, CTkButton
 import PIL 
 import tkinter
 def new_window():
