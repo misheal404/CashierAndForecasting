@@ -75,7 +75,7 @@ def choose_menu():
     keluar_button.place(relx=0.75, rely=0.70, anchor='n')
 
     # Load and display image
-    image = Image.open("CashierAndForecasting\menu&data_penjualan\gambarmenu.png")
+    image = Image.open("gambarmenu.png")
     image = image.resize((int(image.width * 1.6), int(image.height * 1.6)), Image.Resampling.LANCZOS)  # Perbesar gambar
     photo = ImageTk.PhotoImage(image)
 
