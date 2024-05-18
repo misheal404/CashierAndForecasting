@@ -7,7 +7,7 @@ class PaymentApp:
         self.root = root
         self.root.title("Metode Pembayaran")
 
-        self.back_image = None  # Variable to hold the image to avoid garbage collection
+        self.back_image = None
         self.setup_payment_page()
 
     def setup_payment_page(self):
@@ -15,17 +15,17 @@ class PaymentApp:
         for widget in self.root.winfo_children():
             widget.destroy()
 
-        # Label Debit di tengah halaman
+        # Debit
         self.label_debit = tk.Label(self.root, text="Debit", font=("Helvetica", 24))
         self.label_debit.grid(row=0, column=1, columnspan=2, pady=20)
 
-        # Label dan Entry untuk Total Pembelian
+        # Total Pembelian
         self.label_total = tk.Label(self.root, text="Total Pembelian")
         self.label_total.grid(row=1, column=0, sticky="w", padx=10)
         self.entry_total = tk.Entry(self.root)
         self.entry_total.grid(row=1, column=1, padx=10)
 
-        # Label dan OptionMenu untuk Nama Bank
+        # Nama Bank
         self.label_bank = tk.Label(self.root, text="Nama Bank")
         self.label_bank.grid(row=2, column=0, sticky="w", padx=10)
         self.bank_var = tk.StringVar(self.root)
@@ -34,7 +34,7 @@ class PaymentApp:
         self.bank_menu = tk.OptionMenu(self.root, self.bank_var, *self.bank_options)
         self.bank_menu.grid(row=2, column=1, padx=10)
 
-        # Tombol Selesai dengan warna
+        # Selesai
         self.finish_button = tk.Button(self.root, text="Selesai", command=self.finish_payment, bg="blue", fg="black")
         self.finish_button.grid(row=3, column=0, columnspan=2, pady=20)
 
@@ -61,7 +61,7 @@ class PaymentApp:
         for widget in self.root.winfo_children():
             widget.destroy()
 
-        # Label Pembayaran Berhasil di tengah halaman
+        # Pembayaran Berhasil
         self.label_success = tk.Label(self.root, text="Pembayaran Berhasil", font=("Helvetica", 24))
         self.label_success.pack(pady=20)
 
@@ -69,11 +69,11 @@ class PaymentApp:
         self.label_info = tk.Label(self.root, text=f"Total Pembelian: {total_pembelian}\nBank: {nama_bank}", font=("Arial", 14))
         self.label_info.pack(pady=10)
 
-        # Tombol Cetak Nota
+        # Cetak Nota
         self.print_button = tk.Button(self.root, text="Cetak Nota", command=self.print_receipt, bg="green", fg="black")
         self.print_button.pack(pady=5)
-        
-        # Tombol Keluar
+
+        # Keluar
         self.exit_button = tk.Button(self.root, text="Keluar", command=self.root.quit, bg="red", fg="black")
         self.exit_button.pack(pady=5)
 
