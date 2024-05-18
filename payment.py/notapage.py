@@ -72,7 +72,7 @@ class PaymentApp:
         # Tombol Cetak Nota
         self.print_button = tk.Button(self.root, text="Cetak Nota", command=self.print_receipt, bg="green", fg="black")
         self.print_button.pack(pady=5)
-
+        
         # Tombol Keluar
         self.exit_button = tk.Button(self.root, text="Keluar", command=self.root.quit, bg="red", fg="black")
         self.exit_button.pack(pady=5)
