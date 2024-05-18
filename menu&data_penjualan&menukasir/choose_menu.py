@@ -78,7 +78,7 @@ def choose_menu():
     keluar_button.place(relx=0.75, rely=0.70, anchor='n')
 
     # Load and display image
-    image = Image.open("CashierAndForecasting/menu&data_penjualan/gambarmenu.png")
+    image = Image.open("D:\PROKOM\CashierAndForecasting\menu&data_penjualan&menukasir\gambarmenu.png")
     image = image.resize((int(image.width * 1.6), int(image.height * 1.6)), Image.Resampling.LANCZOS)
     photo = ImageTk.PhotoImage(image)
 
@@ -148,7 +148,8 @@ class Kasir:
         for widget in self.root.winfo_children():
             widget.destroy()
 
-        self.root.configure(fg_color='#a9b388')  # Ubah warna latar belakang
+        # Change background color
+        self.root.configure(fg_color='#a9b388')
 
         title_text = ctk.CTkLabel(
             self.root,
@@ -159,7 +160,7 @@ class Kasir:
         title_text.place(relx=0.5, rely=0.1, anchor='n')
 
         self.items = {
-            "Coffee Latte": 0,
+            "Coffe Latte": 0,
             "Caramel Latte": 0,
             "Cappuccino": 0,
             "Mocha Latte": 0,
@@ -168,76 +169,107 @@ class Kasir:
         }
 
         self.labels = {}
-        self.buttons = {}  # Dictionary untuk menyimpan tombol plus dan minus
+        self.buttons = {}  # Dictionary to store plus and minus buttons
 
         for idx, (item, qty) in enumerate(self.items.items()):
-            # Nama item
+            # Frame for border
+            item_frame = ctk.CTkFrame(
+                master=self.root,
+                width=1000,
+                height=70,
+                corner_radius=25,
+                fg_color='#FFFFFF'  # Background color white
+            )
+            item_frame.place(relx=0.5, rely=0.3 + idx * 0.1, anchor='center')
+
+            # Item name
             item_name_label = ctk.CTkLabel(
-                self.root,
+                item_frame,
                 text=item,
                 font=("Helvetica", 30),
                 text_color='#35522b'
             )
-            item_name_label.place(relx=0.4, rely=0.3 + idx * 0.1, anchor='e')
+            item_name_label.place(relx=0.05, rely=0.5, anchor='w')
 
-            # Tombol minus
+            # Minus button
             subtract_button = ctk.CTkButton(
-                master=self.root,
+                master=item_frame,
                 font=('Helvetica', 20, 'bold'),
                 text="-",
                 width=50,
                 height=50,
-                corner_radius=10,
+                corner_radius=25,
                 border_width=1,
-                border_color="#EEEEEE",
+                border_color="#ff3131",
+                text_color='#35522b',
                 fg_color="#ff3131",
                 command=lambda item=item: self.update_quantity(item, -1)
             )
-            subtract_button.place(relx=0.45, rely=0.3 + idx * 0.1, anchor='e')
+            subtract_button.place(relx=0.75, rely=0.5, anchor='center')
             self.buttons[f"subtract_{item}"] = subtract_button
 
-            # Kuantitas
+            # Quantity
             item_label = ctk.CTkLabel(
-                self.root,
+                item_frame,
                 text=f"{self.items[item]}",
                 font=("Helvetica", 30),
                 text_color='#35522b'
             )
-            item_label.place(relx=0.5, rely=0.3 + idx * 0.1, anchor='c')
+            item_label.place(relx=0.85, rely=0.5, anchor='center')
             self.labels[item] = item_label
 
-            # Tombol plus
+            # Plus button
             add_button = ctk.CTkButton(
-                master=self.root,
+                master=item_frame,
                 font=('Helvetica', 20, 'bold'),
                 text="+",
                 width=50,
                 height=50,
-                corner_radius=10,
+                corner_radius=25,
                 border_width=1,
-                border_color="#EEEEEE",
-                fg_color="#627254",
+                text_color='#35522b',
+                border_color="#ffe7a9",
+                fg_color="#ffe7a9",
                 command=lambda item=item: self.update_quantity(item, 1)
             )
-            add_button.place(relx=0.55, rely=0.3 + idx * 0.1, anchor='w')
+            add_button.place(relx=0.95, rely=0.5, anchor='center')
             self.buttons[f"add_{item}"] = add_button
 
-        # Tombol Selesai
+        # Done button
         done_button = ctk.CTkButton(
             master=self.root,
             font=('Helvetica', 20, 'bold'),
-            text="Selesai",
+            text="Done",
             width=150,
             height=50,
             corner_radius=10,
             border_width=1,
-            border_color="#EEEEEE",
-            fg_color="#627254",
-            command=self.process_order  # Tambahkan fungsi untuk memproses pesanan
+            text_color='#FFE7A9',
+            border_color="#35522B",
+            fg_color="#35522B",
+            command=self.process_order  # Add function to process order
         )
-        done_button.place(relx=0.9, rely=0.9, anchor='se')
+        done_button.place(relx=0.95, rely=0.95, anchor='se')
+
+        # Back button
+        back_button = ctk.CTkButton(
+            master=self.root,
+            font=('Helvetica', 20, 'bold'),
+            text="Kembali",
+            width=100,
+            height=50,
+            corner_radius=10,
+            border_width=1,
+            border_color="#35522B",
+            text_color='#FFE7A9',
+            fg_color="#35522B",
+            command=choose_menu
+        )
+        back_button.place(relx=0.05, rely=0.95, anchor='sw')
+
 
     def process_order(self):
         # Fungsi untuk memproses pesanan (implementasikan sesuai kebutuhan Anda)
         pass
+
 choose_menu()
