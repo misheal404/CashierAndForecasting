@@ -1,3 +1,4 @@
+import customtkinter as Ctk
 import tkinter as tk
 from tkinter import messagebox
 from PIL import Image, ImageTk
@@ -7,7 +8,19 @@ class PaymentApp:
         self.root = root
         self.root.title("Metode Pembayaran")
 
-        self.back_image = None
+        # Mendapatkan ukuran layar
+        screen_width = root.winfo_screenwidth()
+        screen_height = root.winfo_screenheight()
+
+        # Menentukan ukuran dan posisi jendela
+        window_width = 400
+        window_height = 300
+        x_position = (screen_width - window_width) // 2
+        y_position = (screen_height - window_height) // 2
+
+        # Mengatur ukuran dan posisi jendela
+        self.root.geometry(f"{window_width}x{window_height}+{x_position}+{y_position}")
+
         self.setup_payment_page()
 
     def setup_payment_page(self):
@@ -16,27 +29,30 @@ class PaymentApp:
             widget.destroy()
 
         # Debit
-        self.label_debit = tk.Label(self.root, text="Debit", font=("Helvetica", 24))
-        self.label_debit.grid(row=0, column=1, columnspan=2, pady=20)
+        self.label_debit = tk.Label(self.root, text="Debit", font=("Helvetica", 36))
+        self.label_debit.pack(pady=20)
 
         # Total Pembelian
-        self.label_total = tk.Label(self.root, text="Total Pembelian")
-        self.label_total.grid(row=1, column=0, sticky="w", padx=10)
-        self.entry_total = tk.Entry(self.root)
-        self.entry_total.grid(row=1, column=1, padx=10)
+        self.label_total = tk.Label(self.root, text="Total Pembelian", font=("Helvetica", 18))
+        self.label_total.pack(anchor="w", padx=10)
+
+        self.entry_total = tk.Entry(self.root, font=("Helvetica", 14))
+        self.entry_total.pack(padx=10)
 
         # Nama Bank
-        self.label_bank = tk.Label(self.root, text="Nama Bank")
-        self.label_bank.grid(row=2, column=0, sticky="w", padx=10)
+        self.label_bank = tk.Label(self.root, text="Nama Bank", font=("Helvetica", 18))
+        self.label_bank.pack(anchor="w", padx=10)
+
         self.bank_var = tk.StringVar(self.root)
         self.bank_var.set("Pilih Bank")
         self.bank_options = ["BCA"]
         self.bank_menu = tk.OptionMenu(self.root, self.bank_var, *self.bank_options)
-        self.bank_menu.grid(row=2, column=1, padx=10)
+        self.bank_menu.config(font=("Helvetica", 14))
+        self.bank_menu.pack(padx=10)
 
         # Selesai
-        self.finish_button = tk.Button(self.root, text="Selesai", command=self.finish_payment, bg="blue", fg="black")
-        self.finish_button.grid(row=3, column=0, columnspan=2, pady=20)
+        self.finish_button = tk.Button(self.root, text="Selesai", command=self.finish_payment, bg="blue", fg="black", font=("Helvetica", 18))
+        self.finish_button.pack(pady=20)
 
     def finish_payment(self):
         total_pembelian = self.entry_total.get()
@@ -62,19 +78,20 @@ class PaymentApp:
             widget.destroy()
 
         # Pembayaran Berhasil
-        self.label_success = tk.Label(self.root, text="Pembayaran Berhasil", font=("Helvetica", 24))
+        self.label_success = tk.Label(self.root, text="Pembayaran Berhasil", font=("Helvetica", 36))
         self.label_success.pack(pady=20)
 
         # Informasi pembayaran
-        self.label_info = tk.Label(self.root, text=f"Total Pembelian: {total_pembelian}\nBank: {nama_bank}", font=("Arial", 14))
+        info_text = f"Total Pembelian: {total_pembelian}\nBank: {nama_bank}"
+        self.label_info = tk.Label(self.root, text=info_text, font=("Arial", 24))
         self.label_info.pack(pady=10)
 
         # Cetak Nota
-        self.print_button = tk.Button(self.root, text="Cetak Nota", command=self.print_receipt, bg="green", fg="black")
+        self.print_button = tk.Button(self.root, text="Cetak Nota", command=self.print_receipt, bg="green", fg="black", font=("Helvetica", 18))
         self.print_button.pack(pady=5)
 
         # Keluar
-        self.exit_button = tk.Button(self.root, text="Keluar", command=self.root.quit, bg="red", fg="black")
+        self.exit_button = tk.Button(self.root, text="Keluar", command=self.root.quit, bg="red", fg="black", font=("Helvetica", 18))
         self.exit_button.pack(pady=5)
 
     def print_receipt(self):
