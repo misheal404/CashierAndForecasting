@@ -1,4 +1,5 @@
 import customtkinter as ctk 
+import pandas as pd
 import tkinter as tk
 from customtkinter import CTk, CTkLabel, FontManager, CTkCanvas, CTkButton
 import PIL 
@@ -79,32 +80,68 @@ def log_in():
 
     sign_in.mainloop()
 
-def menu():
-    mena = ctk.CTk()
-    mena.geometry(f"{500}x{500}")
-    mena._fg_color('#EEEEEE')
-    mena.title("Menu")
-
-    # Load the image
-    image = Image.open("CashierAndForecasting/mishel/s.png")
-    photo = ImageTk.PhotoImage(image)
-
-    header = ctk.CTkLabel(mena,text="Menu list", 
-                          width=90, height=10,
-                        font=("Helvetica", 20),
-                        fg_color='#627254', bg_color='#EEEEEE',
-                        text_color='#EEEEEE')
-    header.place(x=300, y=150)
-    mena.mainloop()
 
 def mine():
-    menu = ctk.CTk()
+    menu = ctk.CTk(fg_color='#A9B388')
     menu.geometry(f"{500}x{500}")
     menu.title("Menu")
-    # Load the image
-    F1 = ctk.CTkFrame(menu, width=1000, height=50, bg_color='#627254')
-    F1.place(x=20, y=20)
-    menu_1 = ctk.CTkButton(master=F1,
+ 
+    #tabview
+    drink = ctk.CTkTabview(master=menu, width=800, height=500, fg_color='#EEEEEE')
+    drink.place(x=310, y=100)
+    
+    drink.add('tabview 1')
+    drink.add('2')
+    drink.set('tabview 1')
+    #label
+    Frame1 = ctk.CTkFrame(drink.tab('tabview 1') , width=650, height=50, corner_radius=30, bg_color='transparent', fg_color='#627254')
+
+    text1 = ctk.CTkLabel(Frame1, text="Kopi gula aren", 
+                          width=90, height=10,
+                        font=("Helvetica", 20, 'bold'),
+                        fg_color='#627254', bg_color='transparent',
+                        text_color='#EEEEEE' )
+  
+    button1 = ctk.CTkButton(Frame1,
+                            font=('Helvetica', -18, 'bold'),
+                            text="+",
+                            width=15,
+                            height=25,
+                            corner_radius=30,  # This creates the rounded effect
+                            border_width=0, 
+                            border_color="#EEEEEE",
+                            text_color="#627254", fg_color='#EEEEEE')
+    button2 = ctk.CTkButton(Frame1,
+                            font=('Helvetica', -18, 'bold'),
+                            text="-",
+                            width=15,
+                            height=25,
+                            corner_radius=30,  # This creates the rounded effect
+                            border_width=0, 
+                            border_color="#EEEEEE",
+                            text_color="#627254", fg_color='#EEEEEE')
+    Frame1.place(x=60, y=50)
+    text1.place(x=30, y=13)
+    button2.place(x=560, y=13)
+    button1.place(x=590, y=13)
+
+    Frame2 = ctk.CTkFrame(drink.tab('tabview 1') , width=650, height=50, corner_radius=30, bg_color='transparent', fg_color='#627254')
+    Frame2.place(x=60, y=130)
+    text2 = ctk.CTkLabel(Frame2, text="Kopi susu aren", 
+                          width=90, height=10,
+                        font=("Helvetica", 20, 'bold'),
+                        fg_color='#627254', bg_color='transparent',
+                        text_color='#EEEEEE' )
+    Frame1.place(x=60, y=50)
+    Frame2.place(x=60, y=130)
+    text2.place(x=30, y=15)
+    text1.place(x=30, y=13)
+    button2.place(x=520, y=13)
+    button1.place(x=590, y=13)
+
+
+    #button
+    menu_1 = ctk.CTkButton(master=menu,
     font=('Helvetica', -15, 'bold'),
     text="Log in",
     width=30,
@@ -113,6 +150,6 @@ def mine():
     border_width=0, 
     border_color="#EEEEEE",
     fg_color="#627254")
-    menu_1.place(x=500, y=20)
+    #menu_1.place(x=500, y=20)
     menu.mainloop()
 mine()
