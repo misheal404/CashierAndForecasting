@@ -1,75 +1,267 @@
-# gui pembuatan halaman login dan register
 from tkinter import *
 import tkinter as tk
-import customtkinter as ctk 
-def halaman_login():
+import customtkinter as ctk
+from tkinter import messagebox
+from PIL import Image, ImageTk
+
+is_fullscreen = False
+
+def toggle_fullscreen(window):
+    global is_fullscreen
+    is_fullscreen = not is_fullscreen
+    window.attributes("-fullscreen", is_fullscreen)
+
+def create_rounded_rectangle(canvas, x1, y1, x2, y2, radius=25, **kwargs):
+    points = [x1+radius, y1,
+              x1+radius, y1,
+              x2-radius, y1,
+              x2-radius, y1,
+              x2, y1,
+              x2, y1+radius,
+              x2, y1+radius,
+              x2, y2-radius,
+              x2, y2-radius,
+              x2, y2,
+              x2-radius, y2,
+              x2-radius, y2,
+              x1+radius, y2,
+              x1+radius, y2,
+              x1, y2,
+              x1, y2-radius,
+              x1, y2-radius,
+              x1, y1+radius,
+              x1, y1+radius,
+              x1, y1]
+    return canvas.create_polygon(points, **kwargs, smooth=True)
+
+def halaman_signin():
+    global is_fullscreen, window, bg_photo
+    try:
+        if window:
+            window.destroy()
+    except NameError:
+        pass
     window = tk.Tk()
-    #menambah ikon photo
-    image = PhotoImage(file="C:\\Users\\rafae\\OneDrive\\Dokumen\\PROKOM TUBES COBA COBA\\CashierAndForecasting\\rafael pp\\images.png")
-    window.iconphoto(False, image)
+    window.title("Cafe Chronicle")
+    window.geometry("1366x768")
+    window.configure(bg="#DDDDDD")
+    window.resizable(True, True)
+    window.attributes("-fullscreen", is_fullscreen)
 
-    window.title("Cafe Chronicle") #judl program sebelah ikon
-    window.geometry("1366x768") #resolusi layar
-    window.configure(bg="#DDDDDD")#bg
-    window.resizable(True, True)    
-    #frame = Frame(window, width=350, height=350, bg="gray")
-    #frame.place(x=600, y=200)
-    heading = Label(window, text="Cafe Chronicle", fg="#627254", bg="#DDDDDD", font=("HK Grotesk", 70))#judul di interface
-    heading.place(x=40, y=130)
+    # Load the background image
+    bg_image = Image.open("C:\\Users\\rafae\\OneDrive\\Dokumen\\PROKOM TUBES COBA COBA\\rafael pp\\OIP.jpg")  # Replace with your image path
+    bg_image = bg_image.resize((1366, 768), Image.Resampling.LANCZOS)
+    bg_photo = ImageTk.PhotoImage(bg_image)
 
-    subheading = Label(window, text="Welcome to the Cafe Chronicle Cashier app, your new", fg="#000000", bg="#DDDDDD", font=("Canva Sans", 22)) #subjudul
-    subheading.place(x=50, y=230)
+    canvas = Canvas(window, width=1366, height=768, bg="#DDDDDD", highlightthickness=0)
+    canvas.pack(fill="both", expand=True)
 
-    subheading2 = Label(window, text="partner in crafting seamless customer experiences.", fg="#000000", bg="#DDDDDD", font=("Canva Sans", 22)) #subjudul
-    subheading2.place(x=50, y=270)
+    # Add the background image to the canvas
+    canvas.create_image(0, 0, image=bg_photo, anchor="nw")
+
+    # Create a rounded rectangle on the canvas
+    create_rounded_rectangle(canvas, -30, 0, 633, 720, radius=80, fill="#A9B388")
+
+    heading = Label(window, text="Sign In", fg="#35522B", bg="#A9B388", font=("Montserrat", 50, "bold"))
+    heading.place(x=200, y=120)
+
+    username_label = Label(window, text="Username:", fg="#FFE7A9", bg="#A9B388", font=("HK Grotesk", 13, "bold"))
+    username_label.place(x=150, y=210)
+
+    create_rounded_rectangle(canvas, 130, 245, 505, 295, radius=40, fill="#A9B388", outline="black", width=2)
+    username_var = StringVar()
+
+    def limit_username(*args):
+        if len(username_var.get()) > 15:
+            messagebox.showerror("Username Tidak Boleh Melebihi 15 Karakter!")
+            username_var.set(username_var.get()[:15])
+
+    username_var.trace("w", limit_username)
+    username = Entry(window, textvariable=username_var, width=23, fg="black", border=0, bg="#A9B388", font=("Montserrat", 20))
+    username.place(x=150, y=252)
+
+    password_label = Label(window, text="Password:", fg="#FFE7A9", bg="#A9B388", font=("HK Grotesk", 13, "bold"))
+    password_label.place(x=150, y=310)
+
+    create_rounded_rectangle(canvas, 130, 345, 505, 395, radius=40, fill="#A9B388", outline="black", width=2)
+    password_var = StringVar()
+
+    def limit_password(*args):
+        if len(password_var.get()) > 15:
+            messagebox.showerror("Input Error", "Password cannot exceed 15 characters.")
+            password_var.set(password_var.get()[:15])
+
+    password_var.trace("w", limit_password)
+    password = Entry(window, textvariable=password_var, width=23, fg="black", border=0, bg="#A9B388", font=("Montserrat", 20), show='*')
+    password.place(x=150, y=352)
+
+    def toggle_password():
+        if password.cget('show') == '*':
+            password.config(show='')
+        else:
+            password.config(show='*')
+
+    show_password = Checkbutton(window, text="Show Password", command=toggle_password, bg="#A9B388", fg="black", font=("Montserrat", 12))
+    show_password.place(x=150, y=400)
+
     if ctk is not None:
-        login_button = ctk.CTkButton(
+        confirm_button = ctk.CTkButton(
             master=window,
-            text=("Log In"),
-            font=("Circular Std", 30),
-            width=150,
-            height=55,
-            fg_color="#76885B",
-            corner_radius=40,  # Adjust corner radius for desired roundness
-            command=halaman_register  # Replace with your login function
+            text=("Confirm"),
+            font=("Circular Std", 20),
+            text_color="#FFE7A9",
+            width=120,
+            height=40,
+            fg_color="#35522B",
+            bg_color="#A9B388",
+            corner_radius=20,
+            command=lambda: print("Confirm Clicked")
         )
-        login_button.place(x=70, y=350)  # Position the button (adjust as needed)
-    
-    
-    img = PhotoImage(file="C:\\Users\\rafae\\OneDrive\\Dokumen\\PROKOM TUBES COBA COBA\\CashierAndForecasting\\rafael pp\\image.png")
-    Label(window, image=img, bg="#DDDDDD",).place(x=760, y=100)
+        confirm_button.place(x=135, y=440)
+        
+        fullscreen_button = ctk.CTkButton(
+            master=window,
+            text=("Toggle Fullscreen"),
+            font=("Circular Std", 20),
+            text_color="#FFE7A9",
+            width=150,
+            height=40,
+            fg_color="#35522B",
+            bg_color="#A9B388",
+            corner_radius=20,
+            command=lambda: toggle_fullscreen(window)
+        )
+        fullscreen_button.place(x=40, y=20)
 
-    def halaman_register():
-        window.destroy()
-        global window2
-        window2 = tk.Tk()
-        window2.title("Cafe Chronicle")
-        window2.geometry("1250x756")
-        window2.configure(bg="white")
-        window2.resizable(True, True)    
-        frame = Frame(window2, width=350, height=350, bg="gray")
-        frame.place(x=600, y=200)
-        heading = Label(frame, text="Sign Up", fg="#57a1f8", bg="gray", font=("Montserrat", 23, "bold"))
-        heading.place(x=100, y=5)
-        username = Entry(frame, width= 25, fg="black", border=2, bg="white", font=(11))
-        username.place(x=60, y=75)
-        password = Entry(frame, width= 25, fg="black", border=2, bg="white", font=(11))
-        password.place(x=60, y=115)
+    noacc_label = Label(window, text="Don't have account?", fg="#FFE7A9", bg="#A9B388", font=("HK Grotesk", 13, "bold"))
+    noacc_label.place(x=130, y=500)
 
-        img = PhotoImage(file="Modern Initial E Logo.png")
-        Label(window2, image=img, bg="white",).place(x=120, y=125)
-
-        Button(frame, width=29, height=1, text="Confirm", fg="white", bg="#57a1f8").place(x=60,y=185)
-        Button(frame, width=29, height=1, text="Back", fg="black", bg="white", command=back_login).place(x=60,y=155)
-        window2.mainloop()
-
-
-    def back_login():
-        window2.destroy()
-        halaman_login()
-
+    sign_up_label = Label(window, text="Sign Up", fg="#FFE7A9", bg="#A9B388", font=("HK Grotesk", 13, "bold", "underline"), cursor="hand2")
+    sign_up_label.place(x=300, y=498)
+    sign_up_label.bind("<Button-1>", lambda e: halaman_signup())
 
     window.mainloop()
-halaman_login()
 
+def back_signin():
+    global window3
+    if window3 and window3.winfo_exists():
+        window3.destroy()
+        window3 = None
+    halaman_signin()
 
+def halaman_signup():
+    global is_fullscreen, window, window3, bg_photo
+    if window and window.winfo_exists():
+        window.destroy()
+        window = None
+    window3 = tk.Tk()
+    window3.title("Cafe Chronicle - Sign Up")
+    window3.geometry("1366x768")
+    window3.configure(bg="#DDDDDD")
+    window3.resizable(True, True)
+    window3.attributes("-fullscreen", is_fullscreen)
+
+    canvas = Canvas(window3, width=1366, height=768, bg="#DDDDDD", highlightthickness=0)
+    canvas.pack(fill="both", expand=True)
+
+    # Load the background image
+    bg_image = Image.open("C:\\Users\\rafae\\OneDrive\\Dokumen\\PROKOM TUBES COBA COBA\\rafael pp\\OIP.jpg")  # Replace with your image path
+    bg_image = bg_image.resize((1366, 768), Image.Resampling.LANCZOS)
+    bg_photo = ImageTk.PhotoImage(bg_image)
+
+    # Add the background image to the canvas
+    canvas.create_image(0, 0, image=bg_photo, anchor="nw")
+
+    # Implement the sign-up UI here
+    heading = Label(window3, text="Sign Up", fg="#35522B", bg="#DDDDDD", font=("Montserrat", 50, "bold"))
+    heading.place(x=600, y=120)
+
+    # Create rounded frame
+    create_rounded_rectangle(canvas, 410, 150, 860, 570, radius=50, fill="#A9B388", outline="#A9B388", width=2)
+
+    username_label = Label(window3, text="Username:", fg="#FFE7A9", bg="#DDDDDD", font=("HK Grotesk", 13, "bold"))
+    username_label.place(x=500, y=250)
+
+    # Create a rounded rectangle for username entry
+    create_rounded_rectangle(canvas, 480, 295, 900, 325, radius=40, fill="#A9B388", outline="black", width=2)
+    username_var = StringVar()
+
+    # Limit the length of username
+    def limit_username(*args):
+        if len(username_var.get()) > 15:
+            messagebox.showerror("Username Tidak Boleh Melebihi 15 Karakter!")
+            username_var.set(username_var.get()[:15])
+
+    username_var.trace("w", limit_username)
+    username_entry = Entry(window3, textvariable=username_var, width=23, fg="black", border=0, bg="#A9B388", font=("Montserrat", 20))
+    username_entry.place(x=510, y=292)
+
+    password_label = Label(window3, text="Password:", fg="#FFE7A9", bg="#DDDDDD", font=("HK Grotesk", 13, "bold"))
+    password_label.place(x=500, y=370)
+
+    # Create a rounded rectangle for password entry
+    create_rounded_rectangle(canvas, 480, 405, 900, 455, radius=40, fill="#A9B388", outline="black", width=2)
+    password_var = StringVar()
+
+    # Limit the length of password
+    def limit_password(*args):
+        if len(password_var.get()) > 15:
+            messagebox.showerror("Input Error", "Password cannot exceed 15 characters.")
+            password_var.set(password_var.get()[:15])
+
+    password_var.trace("w", limit_password)
+    password_entry = Entry(window3, textvariable=password_var, width=23, fg="black", border=0, bg="#A9B388", font=("Montserrat", 20), show='*')
+    password_entry.place(x=510, y=412)
+
+    # Create a checkbox to show password
+    def toggle_password():
+        if password_entry.cget('show') == '*':
+            password_entry.config(show='')
+        else:
+            password_entry.config(show='*')
+
+    show_password = Checkbutton(window3, text="Show Password", command=toggle_password, bg="#DDDDDD", fg="black", font=("Montserrat", 12))
+    show_password.place(x=510, y=460)
+
+    confirm_password_label = Label(window3, text="Confirm Password:", fg="#FFE7A9", bg="#DDDDDD", font=("HK Grotesk", 13, "bold"))
+    confirm_password_label.place(x=500, y=520)
+
+    # Create a rounded rectangle for confirm password entry
+    create_rounded_rectangle(canvas, 480, 555, 900, 605, radius=40, fill="#A9B388", outline="black", width=2)
+    confirm_password_var = StringVar()
+
+    confirm_password_entry = Entry(window3, textvariable=confirm_password_var, width=23, fg="black", border=0, bg="#A9B388", font=("Montserrat", 20), show='*')
+    confirm_password_entry.place(x=510, y=562)
+
+    if ctk is not None:
+        signup_button = ctk.CTkButton(
+            master=window3,
+            text=("Sign Up"),
+            font=("Circular Std", 20),
+            text_color="#FFE7A9",
+            width=120,
+            height=40,
+            fg_color="#35522B",
+            bg_color="#A9B388",
+            corner_radius=20,
+            command=lambda: print("Sign Up Clicked")
+        )
+        signup_button.place(x=530, y=640)
+
+        back_button = ctk.CTkButton(
+            master=window3,
+            text=("Back"),
+            font=("Circular Std", 20),
+            text_color="#FFE7A9",
+            width=120,
+            height=40,
+            fg_color="#35522B",
+            bg_color="#A9B388",
+            corner_radius=20,
+            command=back_signin
+        )
+        back_button.place(x=200, y=640)
+
+    window3.mainloop()
+
+halaman_signin()
