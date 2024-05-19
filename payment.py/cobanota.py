@@ -8,7 +8,7 @@ app.geometry("400x300")
 # Variabel global untuk menyimpan total pembelian
 total_pembelian = 0
 
-# Fungsi untuk melanjutkan ke halaman pembayaran berhasil
+# Pembayaran berhasil
 def pembayaran_berhasil():
     global total_pembelian
     
@@ -16,19 +16,19 @@ def pembayaran_berhasil():
     for widget in frame_main.winfo_children():
         widget.destroy()
 
-    # Tampilkan pesan pembayaran berhasil
+    # Pembayaran berhasil
     label_sukses = ctk.CTkLabel(master=frame_main, text="Pembayaran Berhasil", font=("Arial", 16))
     label_sukses.pack(pady=10)
 
-    # Tampilkan total pembelian
+    # Total pembelian
     label_total = ctk.CTkLabel(master=frame_main, text=f"Total Pembelian: Rp {total_pembelian}", font=("Arial", 14))
     label_total.pack(pady=5)
 
-    # Tombol untuk mencetak nota
+    # Cetak nota
     button_print = ctk.CTkButton(master=frame_main, text="Print Nota", command=print_nota, fg_color="#4CAF50")
     button_print.pack(pady=10)
 
-    # Tombol untuk keluar
+    # Keluar
     button_keluar = ctk.CTkButton(master=frame_main, text="Keluar", command=app.quit, fg_color="#f44336")
     button_keluar.pack(pady=10)
 
@@ -36,7 +36,7 @@ def pembayaran_berhasil():
 def print_nota():
     print("Nota dicetak")
 
-# Fungsi untuk mendapatkan total pembelian dari input pengguna dan melanjutkan ke pembayaran berhasil
+# Total Pembelian
 def selesai_tapped():
     global total_pembelian
     total_pembelian = int(entry_total_pembelian.get())
