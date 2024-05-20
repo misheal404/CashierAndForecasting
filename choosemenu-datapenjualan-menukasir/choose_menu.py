@@ -3,6 +3,17 @@ import tkinter as tk
 from PIL import Image, ImageTk
 
 def choose_menu():
+    def open_kasir():
+        kasir = Kasir(win)
+        kasir.show_menu_kasir()
+
+    def open_data_penjualan():
+        win.destroy()
+        data_penjualan()
+
+    def close_program():
+        win.destroy()
+
     # Define the new window
     win = ctk.CTk(fg_color='#DDDDDD')
 
@@ -43,7 +54,7 @@ def choose_menu():
         border_width=1,
         border_color="#EEEEEE",
         fg_color="#627254",
-        command=lambda: Kasir(win).show_menu_kasir()  # Menggunakan jendela win sebagai root
+        command=open_kasir  # Menambahkan perintah untuk membuka menu kasir
     )
     kasir_button.place(relx=0.75, rely=0.30, anchor='n')
 
@@ -58,7 +69,7 @@ def choose_menu():
         border_width=1,
         border_color="#EEEEEE",
         fg_color="#627254",
-        command=data_penjualan
+        command=open_data_penjualan  # Menambahkan perintah untuk membuka data penjualan
     )
     penjualan_button.place(relx=0.75, rely=0.50, anchor='n')
 
@@ -73,12 +84,12 @@ def choose_menu():
         border_width=1,
         border_color="#EEEEEE",
         fg_color="#ff3131",
-        command=win.destroy
+        command=close_program  # Menambahkan perintah untuk keluar program
     )
     keluar_button.place(relx=0.75, rely=0.70, anchor='n')
 
     # Load and display image
-    image = Image.open("D:\PROKOM\CashierAndForecasting\menu&data_penjualan&menukasir\gambarmenu.png")
+    image = Image.open("D:\PROKOM\CashierAndForecasting\choosemenu-datapenjualan-menukasir\gambarmenu.png")
     image = image.resize((int(image.width * 1.6), int(image.height * 1.6)), Image.Resampling.LANCZOS)
     photo = ImageTk.PhotoImage(image)
 
@@ -93,6 +104,10 @@ def choose_menu():
     win.mainloop()
 
 def data_penjualan():
+    def go_back():
+        win.destroy()
+        choose_menu()
+
     # Define the new window
     win = ctk.CTk(fg_color='#76885B')
 
@@ -123,7 +138,7 @@ def data_penjualan():
         border_color="#35522B",
         text_color='#FFE7A9',
         fg_color="#35522B",
-        command=choose_menu
+        command=go_back  # Menambahkan perintah untuk kembali ke menu utama
     )
     back_button.place(relx=0.05, rely=0.95, anchor='sw')
 
@@ -134,16 +149,20 @@ class Kasir:
         self.root = root
 
     def update_quantity(self, item, change):
-        self.items[item] += change
-        if self.items[item] < 0:
-            self.items[item] = 0
+        self.items[item]['quantity'] += change
+        if self.items[item]['quantity'] < 0:
+            self.items[item]['quantity'] = 0
         self.update_display()
 
     def update_display(self):
         for item, label in self.labels.items():
-            label.configure(text=f"{self.items[item]}")
+            label.configure(text=f"{self.items[item]['quantity']}")
 
     def show_menu_kasir(self):
+        def go_back():
+            self.root.destroy()
+            choose_menu()
+
         # Clear the window
         for widget in self.root.winfo_children():
             widget.destroy()
@@ -157,21 +176,21 @@ class Kasir:
             font=("Helvetica", 50),
             text_color='#35522b'
         )
-        title_text.place(relx=0.5, rely=0.1, anchor='n')
+        title_text.place(relx=0.5, rely=0.05, anchor='n')
 
         self.items = {
-            "Coffe Latte": 0,
-            "Caramel Latte": 0,
-            "Cappuccino": 0,
-            "Mocha Latte": 0,
-            "Americano": 0,
-            "Vanilla Latte": 0
+            "Coffee Latte": {"quantity": 0, "price": 20000},
+            "Caramel Latte": {"quantity": 0, "price": 25000},
+            "Cappuccino": {"quantity": 0, "price": 22000},
+            "Mocha Latte": {"quantity": 0, "price": 23000},
+            "Americano": {"quantity": 0, "price": 18000},
+            "Vanilla Latte": {"quantity": 0, "price": 24000}
         }
 
         self.labels = {}
         self.buttons = {}  # Dictionary to store plus and minus buttons
 
-        for idx, (item, qty) in enumerate(self.items.items()):
+        for idx, (item, data) in enumerate(self.items.items()):
             # Frame for border
             item_frame = ctk.CTkFrame(
                 master=self.root,
@@ -180,7 +199,7 @@ class Kasir:
                 corner_radius=25,
                 fg_color='#FFFFFF'  # Background color white
             )
-            item_frame.place(relx=0.5, rely=0.3 + idx * 0.1, anchor='center')
+            item_frame.place(relx=0.5, rely=0.25 + idx * 0.1, anchor='center')
 
             # Item name
             item_name_label = ctk.CTkLabel(
@@ -211,7 +230,7 @@ class Kasir:
             # Quantity
             item_label = ctk.CTkLabel(
                 item_frame,
-                text=f"{self.items[item]}",
+                text=f"{self.items[item]['quantity']}",
                 font=("Helvetica", 30),
                 text_color='#35522b'
             )
@@ -224,7 +243,7 @@ class Kasir:
                 font=('Helvetica', 20, 'bold'),
                 text="+",
                 width=50,
-                height=50,
+                                height=50,
                 corner_radius=25,
                 border_width=1,
                 text_color='#35522b',
@@ -235,7 +254,7 @@ class Kasir:
             add_button.place(relx=0.95, rely=0.5, anchor='center')
             self.buttons[f"add_{item}"] = add_button
 
-        # Done button
+                # Done button
         done_button = ctk.CTkButton(
             master=self.root,
             font=('Helvetica', 20, 'bold'),
@@ -263,13 +282,131 @@ class Kasir:
             border_color="#35522B",
             text_color='#FFE7A9',
             fg_color="#35522B",
-            command=choose_menu
+            command=go_back  # Add command to go back to the main menu
         )
         back_button.place(relx=0.05, rely=0.95, anchor='sw')
 
-
     def process_order(self):
-        # Fungsi untuk memproses pesanan (implementasikan sesuai kebutuhan Anda)
-        pass
+        # Close the current kasir window
+        self.root.destroy()
+
+        # Create a new window for the order summary
+        order_window = ctk.CTk(fg_color='#dddddd')
+
+        # Mendapatkan ukuran layar
+        screen_width = order_window.winfo_screenwidth()
+        screen_height = order_window.winfo_screenheight()
+        width = int(screen_width * 0.9)
+        height = int(screen_height * 0.9)
+        order_window.geometry(f"{width}x{height}")
+        order_window.title("Ringkasan Pembelian")
+
+        title_text = ctk.CTkLabel(
+            order_window,
+            text="Ringkasan Pembelian",
+            font=("Helvetica", 40),
+            text_color='#35522b'
+        )
+        title_text.place(relx=0.5, rely=0.03, anchor='n')
+
+        # Add headers for the columns
+        qty_header_label = ctk.CTkLabel(
+            order_window,
+            text="Qty",
+            font=("Helvetica", 25, "bold"),
+            text_color='#35522b'
+        )
+        qty_header_label.place(relx=0.1, rely=0.13, anchor='center')
+
+        menu_header_label = ctk.CTkLabel(
+            order_window,
+            text="Menu",
+            font=("Helvetica", 25, "bold"),
+            text_color='#35522b'
+        )
+        menu_header_label.place(relx=0.25, rely=0.13, anchor='center')
+
+        price_header_label = ctk.CTkLabel(
+            order_window,
+            text="Price",
+            font=("Helvetica", 25, "bold"),
+            text_color='#35522b'
+        )
+        price_header_label.place(relx=0.5, rely=0.13, anchor='center')
+
+        total_header_label = ctk.CTkLabel(
+            order_window,
+            text="Total Harga",
+            font=("Helvetica", 25, "bold"),
+            text_color='#35522b'
+        )
+        total_header_label.place(relx=0.8, rely=0.13, anchor='center')
+
+        total_amount = 0
+        row_height = 0.2
+        for idx, (item, data) in enumerate(self.items.items()):
+            if (quantity := data["quantity"]) > 0:
+                item_total = quantity * data["price"]
+                total_amount += item_total
+
+                # Display order details
+                qty_label = ctk.CTkLabel(
+                    order_window,
+                    text=f"{quantity}",
+                    font=("Helvetica", 25),
+                    text_color='#000000'
+                )
+                qty_label.place(relx=0.1, rely=row_height, anchor='center')
+
+                menu_label = ctk.CTkLabel(
+                    order_window,
+                    text=item,
+                    font=("Helvetica", 25),
+                    text_color='#000000'
+                )
+                menu_label.place(relx=0.2, rely=row_height, anchor='w')
+
+                price_label = ctk.CTkLabel(
+                    order_window,
+                    text=f"Rp{data['price']:,}",
+                    font=("Helvetica", 25),
+                    text_color='#000000'
+                )
+                price_label.place(relx=0.5, rely=row_height, anchor='center')
+
+                total_price_label = ctk.CTkLabel(
+                    order_window,
+                    text=f"Rp{item_total:,}",
+                    font=("Helvetica", 25),
+                    text_color='#000000'
+                )
+                total_price_label.place(relx=0.8, rely=row_height, anchor='center')
+
+                row_height += 0.1
+
+        total_label = ctk.CTkLabel(
+            order_window,
+            text=f"Total Pembelian: Rp{total_amount:,}",
+            font=("Helvetica", 25, "bold"),
+            text_color='#35522b'
+        )
+        total_label.place(relx=0.5, rely=0.8, anchor='center')
+
+        # Bayar button
+        bayar_button = ctk.CTkButton(
+            master=order_window,
+            font=('Helvetica', 20, 'bold'),
+            text="Bayar",
+            width=300,
+            height=50,
+            corner_radius=20,
+            border_width=1,
+            text_color='#FFE7A9',
+            border_color="#35522B",
+            fg_color="#35522B"
+        )
+        bayar_button.place(relx=0.5, rely=0.9, anchor='center')
+
+        order_window.mainloop()
 
 choose_menu()
