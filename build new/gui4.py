@@ -11,21 +11,21 @@ from tkinter import Tk, Canvas, Entry, Text, Button, PhotoImage
 
 
 OUTPUT_PATH = Path(__file__).parent
-ASSETS_PATH = OUTPUT_PATH / Path(r"C:\Users\USER\indoor\New folder (3)\build\assets\frame4")
+ASSETS_PATH = OUTPUT_PATH / Path(r"C:\Users\USER\git rep\CashierAndForecasting\build new\assets\frame4")
 
 
 def relative_to_assets(path: str) -> Path:
     return ASSETS_PATH / Path(path)
 
 
-window = Tk()
+WindowD = Tk()
 
-window.geometry("1280x720")
-window.configure(bg = "#F5EFE6")
+WindowD.geometry("1280x720")
+WindowD.configure(bg = "#F5EFE6")
 
 
 canvas = Canvas(
-    window,
+    WindowD,
     bg = "#F5EFE6",
     height = 720,
     width = 1280,
@@ -55,7 +55,7 @@ canvas.create_text(
 button_image_1 = PhotoImage(
     file=relative_to_assets("button_1.png"))
 button_1 = Button(
-    image=button_image_1,
+    image=button_image_1, bg='#D1D1D1',
     borderwidth=0,
     highlightthickness=0,
     command=lambda: print("button_1 clicked"),
@@ -71,7 +71,7 @@ button_1.place(
 button_image_2 = PhotoImage(
     file=relative_to_assets("button_2.png"))
 button_2 = Button(
-    image=button_image_2,
+    image=button_image_2, bg='#D1D1D1',
     borderwidth=0,
     highlightthickness=0,
     command=lambda: print("button_2 clicked"),
@@ -161,5 +161,5 @@ canvas.create_text(
     fill="#000000",
     font=("InriaSans Bold", 25 * -1)
 )
-window.resizable(False, False)
-window.mainloop()
+WindowD.resizable(False, False)
+WindowD.mainloop()

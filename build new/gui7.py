@@ -15,14 +15,14 @@ def relative_to_assets(path: str) -> Path:
     return ASSETS_PATH / Path(path)
 
 
-window = Tk()
+WindowF = Tk()
 
-window.geometry("1280x720")
-window.configure(bg = "#F5EFE6")
+WindowF.geometry("1280x720")
+WindowF.configure(bg = "#F5EFE6")
 
 
 canvas = Canvas(
-    window,
+    WindowF,
     bg = "#F5EFE6",
     height = 720,
     width = 1280,
@@ -52,7 +52,7 @@ canvas.create_text(
 button_image_1 = PhotoImage(
     file=relative_to_assets("button_1.png"))
 button_1 = Button(
-    image=button_image_1,
+    image=button_image_1, bg='#D1D1D1',
     borderwidth=0,
     highlightthickness=0,
     command=lambda: print("button_1 clicked"),
@@ -172,5 +172,5 @@ button_2.place(
     width=1028.0,
     height=75.0
 )
-window.resizable(False, False)
-window.mainloop()
+WindowF.resizable(False, False)
+WindowF.mainloop()

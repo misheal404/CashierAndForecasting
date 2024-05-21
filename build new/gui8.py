@@ -8,21 +8,21 @@ from tkinter import Tk, Canvas, Entry, Text, Button, PhotoImage
 
 
 OUTPUT_PATH = Path(__file__).parent
-ASSETS_PATH = OUTPUT_PATH / Path(r"C:\Users\USER\indoor\New folder (3)\build\assets\frame8")
+ASSETS_PATH = OUTPUT_PATH / Path(r"C:\Users\USER\git rep\CashierAndForecasting\build new\assets\frame8")
 
 
 def relative_to_assets(path: str) -> Path:
     return ASSETS_PATH / Path(path)
 
 
-window = Tk()
+WindowH = Tk()
 
-window.geometry("1280x720")
-window.configure(bg = "#FFFFFF")
+WindowH.geometry("1280x720")
+WindowH.configure(bg = "#FFFFFF")
 
 
 canvas = Canvas(
-    window,
+    WindowH,
     bg = "#FFFFFF",
     height = 720,
     width = 1280,
@@ -80,5 +80,5 @@ button_2.place(
     width=358.85205078125,
     height=75.0
 )
-window.resizable(False, False)
-window.mainloop()
+WindowH.resizable(False, False)
+WindowH.mainloop()
