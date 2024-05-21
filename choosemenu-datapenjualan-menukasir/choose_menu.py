@@ -4,7 +4,7 @@ from PIL import Image, ImageTk
 
 def choose_menu():
     def open_kasir():
-        kasir = Kasir(win)
+        kasir = Kasir()
         kasir.show_menu_kasir()
 
     def open_data_penjualan():
@@ -15,15 +15,16 @@ def choose_menu():
         win.destroy()
 
     # Define the new window
-    win = ctk.CTk(fg_color='#DDDDDD')
+    win = tk.Tk()
+    win.configure(bg='#DDDDDD')
 
     # Mendapatkan ukuran layar
-    screen_width = win.winfo_screenwidth()
-    screen_height = win.winfo_screenheight()
-    width = int(screen_width * 0.9)
-    height = int(screen_height * 0.9)
-    win.geometry(f"{width}x{height}")
+    win.attributes("-fullscreen", True)
+    win.bind("<F11>", lambda event: win.attributes("-fullscreen",
+                                    not win.attributes("-fullscreen")))
+    win.bind("<Escape>", lambda event: win.attributes("-fullscreen", False))
     win.title("Choose Menu")
+    win.geometry('1280x720')
 
     # Title text
     title_text = ctk.CTkLabel(
@@ -89,12 +90,12 @@ def choose_menu():
     keluar_button.place(relx=0.75, rely=0.70, anchor='n')
 
     # Load and display image
-    image = Image.open("D:\PROKOM\CashierAndForecasting\choosemenu-datapenjualan-menukasir\gambarmenu.png")
-    image = image.resize((int(image.width * 1.6), int(image.height * 1.6)), Image.Resampling.LANCZOS)
+    image = Image.open("D:/PROKOM/CashierAndForecasting/choosemenu-datapenjualan-menukasir/gambarmenu.png")
+    image = image.resize((int(image.width * 1.3), int(image.height * 1.3)), Image.Resampling.LANCZOS)
     photo = ImageTk.PhotoImage(image)
 
     # Create a canvas to place the image
-    canvas = ctk.CTkCanvas(win, width=image.width, height=image.height, bd=0, highlightthickness=0)
+    canvas = tk.Canvas(win, width=image.width, height=image.height, bd=0, highlightthickness=0)
     canvas.create_image(0, 0, anchor="nw", image=photo)
     canvas.place(relx=0.15, rely=0.3)
 
@@ -109,14 +110,15 @@ def data_penjualan():
         choose_menu()
 
     # Define the new window
-    win = ctk.CTk(fg_color='#76885B')
+    win = tk.Tk()
+    win.configure(bg='#76885B')
 
     # Mendapatkan ukuran layar
-    screen_width = win.winfo_screenwidth()
-    screen_height = win.winfo_screenheight()
-    width = int(screen_width * 0.9)
-    height = int(screen_height * 0.9)
-    win.geometry(f"{width}x{height}")
+    win.attributes("-fullscreen", True)
+    win.bind("<F11>", lambda event: win.attributes("-fullscreen",
+                                    not win.attributes("-fullscreen")))
+    win.bind("<Escape>", lambda event: win.attributes("-fullscreen", False))
+    win.geometry('1280x720')
     win.title("Menu Data Penjualan")
 
     title_text = ctk.CTkLabel(
@@ -145,8 +147,9 @@ def data_penjualan():
     win.mainloop()
 
 class Kasir:
-    def __init__(self, root):
-        self.root = root
+    def __init__(self):
+        self.root = tk.Tk()
+        self.root.configure(bg='#a9b388')
 
     def update_quantity(self, item, change):
         self.items[item]['quantity'] += change
@@ -163,12 +166,11 @@ class Kasir:
             self.root.destroy()
             choose_menu()
 
-        # Clear the window
-        for widget in self.root.winfo_children():
-            widget.destroy()
-
-        # Change background color
-        self.root.configure(fg_color='#a9b388')
+        self.root.attributes("-fullscreen", True)
+        self.root.bind("<F11>", lambda event: self.root.attributes("-fullscreen",
+                                    not self.root.attributes("-fullscreen")))
+        self.root.bind("<Escape>", lambda event: self.root.attributes("-fullscreen", False))
+        self.root.title("Kasir Menu")
 
         title_text = ctk.CTkLabel(
             self.root,
@@ -243,18 +245,18 @@ class Kasir:
                 font=('Helvetica', 20, 'bold'),
                 text="+",
                 width=50,
-                                height=50,
+                height=50,
                 corner_radius=25,
                 border_width=1,
                 text_color='#35522b',
                 border_color="#ffe7a9",
                 fg_color="#ffe7a9",
-                command=lambda item=item: self.update_quantity(item, 1)
+                                command=lambda item=item: self.update_quantity(item, 1)
             )
             add_button.place(relx=0.95, rely=0.5, anchor='center')
             self.buttons[f"add_{item}"] = add_button
 
-                # Done button
+        # Done button
         done_button = ctk.CTkButton(
             master=self.root,
             font=('Helvetica', 20, 'bold'),
@@ -286,19 +288,21 @@ class Kasir:
         )
         back_button.place(relx=0.05, rely=0.95, anchor='sw')
 
+        self.root.mainloop()
+
     def process_order(self):
         # Close the current kasir window
         self.root.destroy()
 
         # Create a new window for the order summary
-        order_window = ctk.CTk(fg_color='#dddddd')
+        order_window = tk.Tk()
+        order_window.configure(bg='#dddddd')
 
         # Mendapatkan ukuran layar
-        screen_width = order_window.winfo_screenwidth()
-        screen_height = order_window.winfo_screenheight()
-        width = int(screen_width * 0.9)
-        height = int(screen_height * 0.9)
-        order_window.geometry(f"{width}x{height}")
+        order_window.attributes("-fullscreen", True)
+        order_window.bind("<F11>", lambda event: order_window.attributes("-fullscreen",
+                                        not order_window.attributes("-fullscreen")))
+        order_window.bind("<Escape>", lambda event: order_window.attributes("-fullscreen", False))
         order_window.title("Ringkasan Pembelian")
 
         title_text = ctk.CTkLabel(
@@ -406,6 +410,21 @@ class Kasir:
             fg_color="#35522B"
         )
         bayar_button.place(relx=0.5, rely=0.9, anchor='center')
+        back_button = ctk.CTkButton(
+            master=order_window,
+            font=('Helvetica', 20, 'bold'),
+            text="Kembali",
+            width=150,
+            height=50,
+            corner_radius=10,
+            border_width=1,
+            text_color='#FFE7A9',
+            border_color="#35522B",
+            fg_color="#35522B",
+            command=choose_menu
+        )
+        back_button.place(relx=0.05, rely=0.95, anchor='sw')
+
 
         order_window.mainloop()
 
