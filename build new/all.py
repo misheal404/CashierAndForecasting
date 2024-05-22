@@ -1,5 +1,5 @@
 from tkinter import Toplevel
-
+import customtkinter as ctk
 from pathlib import Path
 
 from tkinter import Tk, Canvas, Entry, Text, Button, PhotoImage
@@ -229,6 +229,7 @@ def sign_in():
         408.0,
         image=entry_image_2
     )
+
     entry_2 = Entry(
         bd=0,
         bg="#FFFFFF",
@@ -246,7 +247,7 @@ def sign_in():
         file=relative_to_assets("button_1.png"))
     button_1 = Button(
         image=button_image_1,
-        borderwidth=0,
+        borderwidth=0, text='password', fg='black',
         highlightthickness=0,
         command=lambda: open_window_2(windowA, home),
         relief="flat"
@@ -390,7 +391,7 @@ def home():
 def menu():
 
     OUTPUT_PATH = Path(__file__).parent
-    ASSETS_PATH = OUTPUT_PATH / Path(r"C:\Users\USER\indoor\New folder (5)\build\assets\frame0")
+    ASSETS_PATH = OUTPUT_PATH / Path(r"C:\Users\USER\git rep\CashierAndForecasting\assets\frame0")
 
 
     def relative_to_assets(path: str) -> Path:
@@ -1747,4 +1748,4 @@ def success():
     WindowH.mainloop()
 
 #menu()
-main()
+summary()
