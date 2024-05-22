@@ -47,7 +47,7 @@ def main():
         image=button_image_1,
         borderwidth=0,
         highlightthickness=0,
-        command=lambda: print("button_1 clicked"),
+        command=lambda: open_window_2(window, sign_in),
         relief="flat"
     )
     button_1.place(
@@ -63,7 +63,7 @@ def main():
         image=button_image_2,
         borderwidth=0,
         highlightthickness=0,
-        command=lambda: print("button_2 clicked"),
+        command=lambda: open_window_2(window, sign_in),
         relief="flat"
     )
     button_2.place(
@@ -79,7 +79,7 @@ def main():
         image=button_image_3,
         borderwidth=0,
         highlightthickness=0,
-        command=lambda: print("button_3 clicked"),
+        command=lambda: open_window_2(window, sign_in),
         relief="flat"
     )
     button_3.place(
@@ -95,7 +95,7 @@ def main():
         image=button_image_4,
         borderwidth=0,
         highlightthickness=0,
-        command=lambda: print("button_4 clicked"),
+        command=lambda: open_window_2(window, sign_in),
         relief="flat"
     )
     button_4.place(
@@ -301,7 +301,7 @@ def home():
         image=button_image_1,
         borderwidth=0,
         highlightthickness=0,
-        command=lambda: print("button_1 clicked"),
+        command=lambda: open_window_2(windowB, home),
         relief="flat"
     )
     button_1.place(
@@ -349,7 +349,7 @@ def home():
         image=button_image_4,
         borderwidth=0,
         highlightthickness=0,
-        command=lambda: home,
+        command=lambda: open_window_2(windowB, main),
         relief="flat"
     )
     button_4.place(
@@ -390,23 +390,23 @@ def home():
 def menu():
 
     OUTPUT_PATH = Path(__file__).parent
-    ASSETS_PATH = OUTPUT_PATH / Path(r"C:\Users\USER\git rep\CashierAndForecasting\build new\assets\frame3")
+    ASSETS_PATH = OUTPUT_PATH / Path(r"C:\Users\USER\indoor\New folder (5)\build\assets\frame0")
 
 
     def relative_to_assets(path: str) -> Path:
         return ASSETS_PATH / Path(path)
 
 
-    WindowC = Tk()
+    windowZ = Tk()
 
-    WindowC.geometry("1280x1455")
-    WindowC.configure(bg = "#E8DFCA")
+    windowZ.geometry("1280x720")
+    windowZ.configure(bg = "#E8DFCA")
 
 
     canvas = Canvas(
-        WindowC,
+        windowZ,
         bg = "#E8DFCA",
-        height = 1455,
+        height = 720,
         width = 1280,
         bd = 0,
         highlightthickness = 0,
@@ -415,122 +415,35 @@ def menu():
 
     canvas.place(x = 0, y = 0)
     canvas.create_rectangle(
-        361.0,
-        192.0,
-        619.0,
-        498.0,
-        fill="#F5EFE6",
+        0.0,
+        5.0,
+        1280.0,
+        98.0,
+        fill="#4F6F52",
         outline="")
 
-    canvas.create_rectangle(
-        361.0,
-        555.0,
-        619.0,
-        861.0,
-        fill="#F5EFE6",
-        outline="")
-
-    canvas.create_rectangle(
-        361.0,
-        918.0,
-        619.0,
-        1224.0,
-        fill="#F5EFE6",
-        outline="")
-
-    canvas.create_rectangle(
-        61.0,
-        192.0,
-        319.0,
-        498.0,
-        fill="#F5EFE6",
-        outline="")
-
-    canvas.create_rectangle(
-        61.0,
-        555.0,
-        319.0,
-        861.0,
-        fill="#F5EFE6",
-        outline="")
-
-    canvas.create_rectangle(
-        61.0,
-        918.0,
-        319.0,
-        1224.0,
-        fill="#F5EFE6",
-        outline="")
-
-    canvas.create_rectangle(
-        661.0,
-        192.0,
-        919.0,
-        498.0,
-        fill="#F5EFE6",
-        outline="")
-
-    canvas.create_rectangle(
-        661.0,
-        555.0,
-        919.0,
-        861.0,
-        fill="#F5EFE6",
-        outline="")
-
-    canvas.create_rectangle(
-        661.0,
-        918.0,
-        919.0,
-        1224.0,
-        fill="#F5EFE6",
-        outline="")
-
-    canvas.create_rectangle(
-        961.0,
-        192.0,
-        1219.0,
-        498.0,
-        fill="#F5EFE6",
-        outline="")
-
-    canvas.create_rectangle(
-        961.0,
-        555.0,
-        1219.0,
-        861.0,
-        fill="#F5EFE6",
-        outline="")
-
-    canvas.create_rectangle(
-        961.0,
-        918.0,
-        1219.0,
-        1224.0,
-        fill="#F5EFE6",
-        outline="")
-
-    image_image_1 = PhotoImage(
-        file=relative_to_assets("image_1.png"))
-    image_1 = canvas.create_image(
-        191.0,
-        669.0,
-        image=image_image_1
+    canvas.create_text(
+        512.0,
+        17.0,
+        anchor="nw",
+        text="M E N U",
+        fill="#FFFFFF",
+        font=("IstokWeb Bold", 40 * -1)
     )
 
-    image_image_2 = PhotoImage(
-        file=relative_to_assets("image_2.png"))
-    image_2 = canvas.create_image(
-        191.0,
-        1040.0,
-        image=image_image_2
-    )
+    canvas.create_rectangle(
+        51.0,
+        125.0,
+        235.0,
+        347.0,
+        fill="#F5EFE6",
+        outline="")
 
     entry_image_1 = PhotoImage(
         file=relative_to_assets("entry_1.png"))
     entry_bg_1 = canvas.create_image(
-        442.11111068725586,
-        470.0,
+        109.0,
+        327.0,
         image=entry_image_1
     )
     entry_1 = Entry(
@@ -540,230 +453,10 @@ def menu():
         highlightthickness=0
     )
     entry_1.place(
-        x=399.0,
-        y=456.0,
-        width=86.22222137451172,
-        height=26.0
-    )
-
-    entry_image_2 = PhotoImage(
-        file=relative_to_assets("entry_2.png"))
-    entry_bg_2 = canvas.create_image(
-        442.11111068725586,
-        833.0,
-        image=entry_image_2
-    )
-    entry_2 = Entry(
-        bd=0,
-        bg="#D9D9D9",
-        fg="#000716",
-        highlightthickness=0
-    )
-    entry_2.place(
-        x=399.0,
-        y=819.0,
-        width=86.22222137451172,
-        height=26.0
-    )
-
-    entry_image_3 = PhotoImage(
-        file=relative_to_assets("entry_3.png"))
-    entry_bg_3 = canvas.create_image(
-        442.11111068725586,
-        1196.0,
-        image=entry_image_3
-    )
-    entry_3 = Entry(
-        bd=0,
-        bg="#D9D9D9",
-        fg="#000716",
-        highlightthickness=0
-    )
-    entry_3.place(
-        x=399.0,
-        y=1182.0,
-        width=86.22222137451172,
-        height=26.0
-    )
-
-    entry_image_4 = PhotoImage(
-        file=relative_to_assets("entry_4.png"))
-    entry_bg_4 = canvas.create_image(
-        142.11111068725586,
-        470.0,
-        image=entry_image_4
-    )
-    entry_4 = Entry(
-        bd=0,
-        bg="#D9D9D9",
-        fg="#000716",
-        highlightthickness=0
-    )
-    entry_4.place(
-        x=99.0,
-        y=456.0,
-        width=86.22222137451172,
-        height=26.0
-    )
-
-    entry_image_5 = PhotoImage(
-        file=relative_to_assets("entry_5.png"))
-    entry_bg_5 = canvas.create_image(
-        142.11111068725586,
-        833.0,
-        image=entry_image_5
-    )
-    entry_5 = Entry(
-        bd=0,
-        bg="#D9D9D9",
-        fg="#000716",
-        highlightthickness=0
-    )
-    entry_5.place(
-        x=99.0,
-        y=819.0,
-        width=86.22222137451172,
-        height=26.0
-    )
-
-    entry_image_6 = PhotoImage(
-        file=relative_to_assets("entry_6.png"))
-    entry_bg_6 = canvas.create_image(
-        142.11111068725586,
-        1196.0,
-        image=entry_image_6
-    )
-    entry_6 = Entry(
-        bd=0,
-        bg="#D9D9D9",
-        fg="#000716",
-        highlightthickness=0
-    )
-    entry_6.place(
-        x=99.0,
-        y=1182.0,
-        width=86.22222137451172,
-        height=26.0
-    )
-
-    entry_image_7 = PhotoImage(
-        file=relative_to_assets("entry_7.png"))
-    entry_bg_7 = canvas.create_image(
-        742.1111106872559,
-        470.0,
-        image=entry_image_7
-    )
-    entry_7 = Entry(
-        bd=0,
-        bg="#D9D9D9",
-        fg="#000716",
-        highlightthickness=0
-    )
-    entry_7.place(
-        x=699.0,
-        y=456.0,
-        width=86.22222137451172,
-        height=26.0
-    )
-
-    entry_image_8 = PhotoImage(
-        file=relative_to_assets("entry_8.png"))
-    entry_bg_8 = canvas.create_image(
-        742.1111106872559,
-        833.0,
-        image=entry_image_8
-    )
-    entry_8 = Entry(
-        bd=0,
-        bg="#D9D9D9",
-        fg="#000716",
-        highlightthickness=0
-    )
-    entry_8.place(
-        x=699.0,
-        y=819.0,
-        width=86.22222137451172,
-        height=26.0
-    )
-
-    entry_image_9 = PhotoImage(
-        file=relative_to_assets("entry_9.png"))
-    entry_bg_9 = canvas.create_image(
-        742.1111106872559,
-        1196.0,
-        image=entry_image_9
-    )
-    entry_9 = Entry(
-        bd=0,
-        bg="#D9D9D9",
-        fg="#000716",
-        highlightthickness=0
-    )
-    entry_9.place(
-        x=699.0,
-        y=1182.0,
-        width=86.22222137451172,
-        height=26.0
-    )
-
-    entry_image_10 = PhotoImage(
-        file=relative_to_assets("entry_10.png"))
-    entry_bg_10 = canvas.create_image(
-        1042.1111106872559,
-        470.0,
-        image=entry_image_10
-    )
-    entry_10 = Entry(
-        bd=0,
-        bg="#D9D9D9",
-        fg="#000716",
-        highlightthickness=0
-    )
-    entry_10.place(
-        x=999.0,
-        y=456.0,
-        width=86.22222137451172,
-        height=26.0
-    )
-
-    entry_image_11 = PhotoImage(
-        file=relative_to_assets("entry_11.png"))
-    entry_bg_11 = canvas.create_image(
-        1042.1111106872559,
-        833.0,
-        image=entry_image_11
-    )
-    entry_11 = Entry(
-        bd=0,
-        bg="#D9D9D9",
-        fg="#000716",
-        highlightthickness=0
-    )
-    entry_11.place(
-        x=999.0,
-        y=819.0,
-        width=86.22222137451172,
-        height=26.0
-    )
-
-    entry_image_12 = PhotoImage(
-        file=relative_to_assets("entry_12.png"))
-    entry_bg_12 = canvas.create_image(
-        1042.1111106872559,
-        1197.0,
-        image=entry_image_12
-    )
-    entry_12 = Entry(
-        bd=0,
-        bg="#D9D9D9",
-        fg="#000716",
-        highlightthickness=0
-    )
-    entry_12.place(
-        x=999.0,
-        y=1183.0,
-        width=86.22222137451172,
-        height=26.0
+        x=79.0,
+        y=317.0,
+        width=60.0,
+        height=18.0
     )
 
     button_image_1 = PhotoImage(
@@ -776,10 +469,55 @@ def menu():
         relief="flat"
     )
     button_1.place(
-        x=533.0,
-        y=455.0,
-        width=51.0,
-        height=28.0
+        x=173.66668701171875,
+        y=315.8039245605469,
+        width=36.372093200683594,
+        height=20.3137264251709
+    )
+
+    canvas.create_text(
+        51.0,
+        286.0,
+        anchor="nw",
+        text="Americano",
+        fill="#000000",
+        font=("IstokWeb Bold", 20 * -1)
+    )
+
+    image_image_1 = PhotoImage(
+        file=relative_to_assets("image_1.png"))
+    image_1 = canvas.create_image(
+        144.0,
+        208.0,
+        image=image_image_1
+    )
+
+    canvas.create_rectangle(
+        301.0,
+        125.0,
+        488.0,
+        347.0,
+        fill="#F5EFE6",
+        outline="")
+
+    entry_image_2 = PhotoImage(
+        file=relative_to_assets("entry_2.png"))
+    entry_bg_2 = canvas.create_image(
+        359.5,
+        327.0,
+        image=entry_image_2
+    )
+    entry_2 = Entry(
+        bd=0,
+        bg="#D9D9D9",
+        fg="#000716",
+        highlightthickness=0
+    )
+    entry_2.place(
+        x=329.0,
+        y=317.0,
+        width=61.0,
+        height=18.0
     )
 
     button_image_2 = PhotoImage(
@@ -792,10 +530,55 @@ def menu():
         relief="flat"
     )
     button_2.place(
-        x=533.0,
-        y=818.0,
-        width=51.0,
-        height=28.0
+        x=425.6666259765625,
+        y=315.8039245605469,
+        width=36.96511459350586,
+        height=20.313724517822266
+    )
+
+    canvas.create_text(
+        301.0,
+        286.0,
+        anchor="nw",
+        text="Espresso",
+        fill="#000000",
+        font=("IstokWeb Bold", 20 * -1)
+    )
+
+    image_image_2 = PhotoImage(
+        file=relative_to_assets("image_2.png"))
+    image_2 = canvas.create_image(
+        395.0,
+        214.0,
+        image=image_image_2
+    )
+
+    canvas.create_rectangle(
+        547.0,
+        128.0,
+        733.0,
+        347.0,
+        fill="#F5EFE6",
+        outline="")
+
+    entry_image_3 = PhotoImage(
+        file=relative_to_assets("entry_3.png"))
+    entry_bg_3 = canvas.create_image(
+        605.5,
+        327.0,
+        image=entry_image_3
+    )
+    entry_3 = Entry(
+        bd=0,
+        bg="#D9D9D9",
+        fg="#000716",
+        highlightthickness=0
+    )
+    entry_3.place(
+        x=575.0,
+        y=317.0,
+        width=61.0,
+        height=18.0
     )
 
     button_image_3 = PhotoImage(
@@ -808,10 +591,55 @@ def menu():
         relief="flat"
     )
     button_3.place(
-        x=533.0,
-        y=1181.0,
-        width=51.0,
-        height=28.0
+        x=671.0,
+        y=316.2254943847656,
+        width=36.76744079589844,
+        height=20.039215087890625
+    )
+
+    canvas.create_text(
+        547.0,
+        287.0,
+        anchor="nw",
+        text="Latte",
+        fill="#000000",
+        font=("IstokWeb Bold", 20 * -1)
+    )
+
+    image_image_3 = PhotoImage(
+        file=relative_to_assets("image_3.png"))
+    image_3 = canvas.create_image(
+        641.0,
+        215.0,
+        image=image_image_3
+    )
+
+    canvas.create_rectangle(
+        792.0,
+        128.0,
+        981.0,
+        347.0,
+        fill="#F5EFE6",
+        outline="")
+
+    entry_image_4 = PhotoImage(
+        file=relative_to_assets("entry_4.png"))
+    entry_bg_4 = canvas.create_image(
+        851.5,
+        327.0,
+        image=entry_image_4
+    )
+    entry_4 = Entry(
+        bd=0,
+        bg="#D9D9D9",
+        fg="#000716",
+        highlightthickness=0
+    )
+    entry_4.place(
+        x=820.0,
+        y=317.0,
+        width=63.0,
+        height=18.0
     )
 
     button_image_4 = PhotoImage(
@@ -824,10 +652,63 @@ def menu():
         relief="flat"
     )
     button_4.place(
-        x=233.0,
-        y=455.0,
-        width=51.0,
-        height=28.0
+        x=918.6666259765625,
+        y=316.2254943847656,
+        width=37.558135986328125,
+        height=20.039216995239258
+    )
+
+    canvas.create_text(
+        792.0,
+        287.0,
+        anchor="nw",
+        text="Cappuccino",
+        fill="#000000",
+        font=("IstokWeb Bold", 20 * -1)
+    )
+
+    image_image_4 = PhotoImage(
+        file=relative_to_assets("image_4.png"))
+    image_4 = canvas.create_image(
+        887.0,
+        216.0,
+        image=image_image_4
+    )
+
+    canvas.create_rectangle(
+        1040.0,
+        125.0,
+        1222.0,
+        347.0,
+        fill="#F5EFE6",
+        outline="")
+
+    image_image_5 = PhotoImage(
+        file=relative_to_assets("image_5.png"))
+    image_5 = canvas.create_image(
+        1132.0,
+        208.0,
+        image=image_image_5
+    )
+
+    entry_image_5 = PhotoImage(
+        file=relative_to_assets("entry_5.png"))
+    entry_bg_5 = canvas.create_image(
+        1097.0,
+        327.5,
+        image=entry_image_5
+    )
+    entry_5 = Entry(
+        bd=0,
+        bg="#D9D9D9",
+        fg="#000716",
+        highlightthickness=0
+    )
+    entry_5.place(
+        x=1067.0,
+        y=317.0,
+        width=60.0,
+        height=19.0
     )
 
     button_image_5 = PhotoImage(
@@ -840,10 +721,47 @@ def menu():
         relief="flat"
     )
     button_5.place(
-        x=233.0,
-        y=818.0,
-        width=51.0,
-        height=28.0
+        x=1161.3333740234375,
+        y=315.8039245605469,
+        width=35.97674560546875,
+        height=20.3137264251709
+    )
+
+    canvas.create_text(
+        1040.0,
+        286.0,
+        anchor="nw",
+        text="Cold Brew",
+        fill="#000000",
+        font=("IstokWeb Bold", 20 * -1)
+    )
+
+    canvas.create_rectangle(
+        1038.0,
+        411.0,
+        1220.0,
+        641.0,
+        fill="#F5EFE6",
+        outline="")
+
+    entry_image_6 = PhotoImage(
+        file=relative_to_assets("entry_6.png"))
+    entry_bg_6 = canvas.create_image(
+        1095.0,
+        619.5,
+        image=entry_image_6
+    )
+    entry_6 = Entry(
+        bd=0,
+        bg="#D9D9D9",
+        fg="#000716",
+        highlightthickness=0
+    )
+    entry_6.place(
+        x=1065.0,
+        y=609.0,
+        width=60.0,
+        height=19.0
     )
 
     button_image_6 = PhotoImage(
@@ -856,10 +774,55 @@ def menu():
         relief="flat"
     )
     button_6.place(
-        x=233.0,
-        y=1181.0,
-        width=51.0,
-        height=28.0
+        x=1159.3333740234375,
+        y=608.6797485351562,
+        width=35.97674560546875,
+        height=21.045751571655273
+    )
+
+    canvas.create_text(
+        1038.0,
+        578.0,
+        anchor="nw",
+        text="Mocha Latte",
+        fill="#000000",
+        font=("IstokWeb Bold", 20 * -1)
+    )
+
+    image_image_6 = PhotoImage(
+        file=relative_to_assets("image_6.png"))
+    image_6 = canvas.create_image(
+        1130.0,
+        497.0,
+        image=image_image_6
+    )
+
+    canvas.create_rectangle(
+        792.0,
+        411.0,
+        989.0,
+        641.0,
+        fill="#F5EFE6",
+        outline="")
+
+    entry_image_7 = PhotoImage(
+        file=relative_to_assets("entry_7.png"))
+    entry_bg_7 = canvas.create_image(
+        853.5,
+        619.5,
+        image=entry_image_7
+    )
+    entry_7 = Entry(
+        bd=0,
+        bg="#D9D9D9",
+        fg="#000716",
+        highlightthickness=0
+    )
+    entry_7.place(
+        x=821.0,
+        y=609.0,
+        width=65.0,
+        height=19.0
     )
 
     button_image_7 = PhotoImage(
@@ -872,10 +835,55 @@ def menu():
         relief="flat"
     )
     button_7.place(
-        x=833.0,
-        y=455.0,
-        width=51.0,
-        height=28.0
+        x=923.333251953125,
+        y=608.6797485351562,
+        width=38.94186019897461,
+        height=21.045751571655273
+    )
+
+    canvas.create_text(
+        792.0,
+        578.0,
+        anchor="nw",
+        text="Vanilla Latte",
+        fill="#000000",
+        font=("IstokWeb Bold", 20 * -1)
+    )
+
+    image_image_7 = PhotoImage(
+        file=relative_to_assets("image_7.png"))
+    image_7 = canvas.create_image(
+        891.0,
+        497.0,
+        image=image_image_7
+    )
+
+    canvas.create_rectangle(
+        547.0,
+        413.0,
+        733.0,
+        641.0,
+        fill="#F5EFE6",
+        outline="")
+
+    entry_image_8 = PhotoImage(
+        file=relative_to_assets("entry_8.png"))
+    entry_bg_8 = canvas.create_image(
+        605.5,
+        620.0,
+        image=entry_image_8
+    )
+    entry_8 = Entry(
+        bd=0,
+        bg="#D9D9D9",
+        fg="#000716",
+        highlightthickness=0
+    )
+    entry_8.place(
+        x=575.0,
+        y=610.0,
+        width=61.0,
+        height=18.0
     )
 
     button_image_8 = PhotoImage(
@@ -888,10 +896,63 @@ def menu():
         relief="flat"
     )
     button_8.place(
-        x=833.0,
-        y=818.0,
-        width=51.0,
-        height=28.0
+        x=671.0001220703125,
+        y=608.9607543945312,
+        width=36.7674446105957,
+        height=20.86274528503418
+    )
+
+    canvas.create_text(
+        547.0,
+        578.0,
+        anchor="nw",
+        text="Hazelnut Latte",
+        fill="#000000",
+        font=("IstokWeb Bold", 20 * -1)
+    )
+
+    image_image_8 = PhotoImage(
+        file=relative_to_assets("image_8.png"))
+    image_8 = canvas.create_image(
+        645.0,
+        504.0,
+        image=image_image_8
+    )
+
+    canvas.create_rectangle(
+        297.0,
+        411.0,
+        494.0,
+        641.0,
+        fill="#F5EFE6",
+        outline="")
+
+    image_image_9 = PhotoImage(
+        file=relative_to_assets("image_9.png"))
+    image_9 = canvas.create_image(
+        396.0,
+        503.0,
+        image=image_image_9
+    )
+
+    entry_image_9 = PhotoImage(
+        file=relative_to_assets("entry_9.png"))
+    entry_bg_9 = canvas.create_image(
+        359.0,
+        619.5,
+        image=entry_image_9
+    )
+    entry_9 = Entry(
+        bd=0,
+        bg="#D9D9D9",
+        fg="#000716",
+        highlightthickness=0
+    )
+    entry_9.place(
+        x=327.0,
+        y=609.0,
+        width=64.0,
+        height=19.0
     )
 
     button_image_9 = PhotoImage(
@@ -904,10 +965,47 @@ def menu():
         relief="flat"
     )
     button_9.place(
-        x=833.0,
-        y=1181.0,
-        width=51.0,
-        height=28.0
+        x=428.3333740234375,
+        y=608.6797485351562,
+        width=38.94186019897461,
+        height=21.045751571655273
+    )
+
+    canvas.create_text(
+        297.0,
+        578.0,
+        anchor="nw",
+        text="Thai Tea",
+        fill="#000000",
+        font=("IstokWeb Bold", 20 * -1)
+    )
+
+    canvas.create_rectangle(
+        45.0,
+        411.0,
+        235.0,
+        641.0,
+        fill="#F5EFE6",
+        outline="")
+
+    entry_image_10 = PhotoImage(
+        file=relative_to_assets("entry_10.png"))
+    entry_bg_10 = canvas.create_image(
+        105.0,
+        619.5,
+        image=entry_image_10
+    )
+    entry_10 = Entry(
+        bd=0,
+        bg="#D9D9D9",
+        fg="#000716",
+        highlightthickness=0
+    )
+    entry_10.place(
+        x=74.0,
+        y=609.0,
+        width=62.0,
+        height=19.0
     )
 
     button_image_10 = PhotoImage(
@@ -920,10 +1018,27 @@ def menu():
         relief="flat"
     )
     button_10.place(
-        x=1133.0,
-        y=455.0,
-        width=51.0,
-        height=28.0
+        x=171.66668701171875,
+        y=608.6797485351562,
+        width=37.55813980102539,
+        height=21.045751571655273
+    )
+
+    canvas.create_text(
+        45.0,
+        578.0,
+        anchor="nw",
+        text="Vanilla Latte",
+        fill="#000000",
+        font=("IstokWeb Bold", 20 * -1)
+    )
+
+    image_image_10 = PhotoImage(
+        file=relative_to_assets("image_10.png"))
+    image_10 = canvas.create_image(
+        141.0,
+        503.0,
+        image=image_image_10
     )
 
     button_image_11 = PhotoImage(
@@ -932,238 +1047,18 @@ def menu():
         image=button_image_11,
         borderwidth=0,
         highlightthickness=0,
-        command=lambda: print("button_11 clicked"),
+        command=lambda: open_window_2(windowZ, summary),
         relief="flat"
     )
     button_11.place(
-        x=1133.0,
-        y=818.0,
-        width=51.0,
-        height=28.0
+        x=1106.0,
+        y=20.0,
+        width=148.0,
+        height=41.0
     )
+    windowZ.resizable(False, False)
+    windowZ.mainloop()
 
-    canvas.create_text(
-        361.0,
-        414.0,
-        anchor="nw",
-        text="Espresso",
-        fill="#000000",
-        font=("IstokWeb Bold", 20 * -1)
-    )
-
-    canvas.create_text(
-        361.0,
-        777.0,
-        anchor="nw",
-        text="Mocha Latte",
-        fill="#000000",
-        font=("IstokWeb Bold", 20 * -1)
-    )
-
-    canvas.create_text(
-        361.0,
-        1140.0,
-        anchor="nw",
-        text="Mocha Latte",
-        fill="#000000",
-        font=("IstokWeb Bold", 20 * -1)
-    )
-
-    canvas.create_text(
-        61.0,
-        414.0,
-        anchor="nw",
-        text="Americano",
-        fill="#000000",
-        font=("IstokWeb Bold", 20 * -1)
-    )
-
-    canvas.create_text(
-        61.0,
-        777.0,
-        anchor="nw",
-        text="Cold Brew",
-        fill="#000000",
-        font=("IstokWeb Bold", 20 * -1)
-    )
-
-    canvas.create_text(
-        61.0,
-        1140.0,
-        anchor="nw",
-        text="Cold Brew",
-        fill="#000000",
-        font=("IstokWeb Bold", 20 * -1)
-    )
-
-    canvas.create_text(
-        661.0,
-        414.0,
-        anchor="nw",
-        text="Latte",
-        fill="#000000",
-        font=("IstokWeb Bold", 20 * -1)
-    )
-
-    canvas.create_text(
-        661.0,
-        777.0,
-        anchor="nw",
-        text="Vanilla Latte",
-        fill="#000000",
-        font=("IstokWeb Bold", 20 * -1)
-    )
-
-    canvas.create_text(
-        661.0,
-        1140.0,
-        anchor="nw",
-        text="Vanilla Latte",
-        fill="#000000",
-        font=("IstokWeb Bold", 20 * -1)
-    )
-
-    canvas.create_text(
-        961.0,
-        414.0,
-        anchor="nw",
-        text="Cappuccino",
-        fill="#000000",
-        font=("IstokWeb Bold", 20 * -1)
-    )
-
-    canvas.create_text(
-        961.0,
-        777.0,
-        anchor="nw",
-        text="Hazelnut Latte",
-        fill="#000000",
-        font=("IstokWeb Bold", 20 * -1)
-    )
-
-    canvas.create_text(
-        961.0,
-        1140.0,
-        anchor="nw",
-        text="Hazelnut Latte",
-        fill="#000000",
-        font=("IstokWeb Bold", 20 * -1)
-    )
-
-    canvas.create_rectangle(
-        0.0,
-        5.0,
-        1280.0,
-        98.0,
-        fill="#4F6F52",
-        outline="")
-
-    canvas.create_text(
-        512.0,
-        26.0,
-        anchor="nw",
-        text="M E N U",
-        fill="#FFFFFF",
-        font=("IstokWeb Bold", 40 * -1)
-    )
-
-    button_image_12 = PhotoImage(
-        file=relative_to_assets("button_12.png"))
-    button_12 = Button(
-        image=button_image_12,
-        borderwidth=0,
-        highlightthickness=0,
-        command=lambda: print("button_12 clicked"),
-        relief="flat"
-    )
-    button_12.place(
-        x=142.0,
-        y=1318.0,
-        width=1028.0,
-        height=75.0
-    )
-
-    image_image_3 = PhotoImage(
-        file=relative_to_assets("image_3.png"))
-    image_3 = canvas.create_image(
-        191.0,
-        306.0,
-        image=image_image_3
-    )
-
-    image_image_4 = PhotoImage(
-        file=relative_to_assets("image_4.png"))
-    image_4 = canvas.create_image(
-        791.0,
-        314.0,
-        image=image_image_4
-    )
-
-    image_image_5 = PhotoImage(
-        file=relative_to_assets("image_5.png"))
-    image_5 = canvas.create_image(
-        1089.0,
-        314.0,
-        image=image_image_5
-    )
-
-    image_image_6 = PhotoImage(
-        file=relative_to_assets("image_6.png"))
-    image_6 = canvas.create_image(
-        491.0,
-        669.0,
-        image=image_image_6
-    )
-
-    image_image_7 = PhotoImage(
-        file=relative_to_assets("image_7.png"))
-    image_7 = canvas.create_image(
-        791.0,
-        669.0,
-        image=image_image_7
-    )
-
-    image_image_8 = PhotoImage(
-        file=relative_to_assets("image_8.png"))
-    image_8 = canvas.create_image(
-        1096.0,
-        677.0,
-        image=image_image_8
-    )
-
-    image_image_9 = PhotoImage(
-        file=relative_to_assets("image_9.png"))
-    image_9 = canvas.create_image(
-        491.0,
-        314.0,
-        image=image_image_9
-    )
-
-    image_image_10 = PhotoImage(
-        file=relative_to_assets("image_10.png"))
-    image_10 = canvas.create_image(
-        491.0,
-        1032.0,
-        image=image_image_10
-    )
-
-    image_image_11 = PhotoImage(
-        file=relative_to_assets("image_11.png"))
-    image_11 = canvas.create_image(
-        791.0,
-        1040.0,
-        image=image_image_11
-    )
-
-    image_image_12 = PhotoImage(
-        file=relative_to_assets("image_12.png"))
-    image_12 = canvas.create_image(
-        1087.0,
-        1040.0,
-        image=image_image_12
-    )
-    WindowC.resizable(False, False)
-    WindowC.mainloop()
 
 def summary():
 
@@ -1231,7 +1126,7 @@ def summary():
         image=button_image_2, bg='#D1D1D1',
         borderwidth=0,
         highlightthickness=0,
-        command=lambda: print("button_2 clicked"),
+        command=lambda: open_window_2(WindowD, menu),
         relief="flat"
     )
     button_2.place(
@@ -1371,7 +1266,7 @@ def choose_payment():
         image=button_image_1, bg='#D1D1D1',
         borderwidth=0,
         highlightthickness=0,
-        command=lambda: print("button_1 clicked"),
+        command=lambda: open_window_2(WindowE, summary),
         relief="flat"
     )
     button_1.place(
@@ -1414,7 +1309,6 @@ def choose_payment():
     )
     WindowE.resizable(False, False)
     WindowE.mainloop()
-choose_payment()
 
 def emoney():
     OUTPUT_PATH = Path(__file__).parent
@@ -1852,4 +1746,5 @@ def success():
     WindowH.resizable(False, False)
     WindowH.mainloop()
 
-summary()
+#menu()
+main()

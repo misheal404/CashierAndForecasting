@@ -1,32 +1,43 @@
 import pandas as pd
 import customtkinter as ctk
-oerder_menu = []
+
+# Initialize empty lists to store menu data
+order_menu = []
 price_o = []
 quanti = []
-menu = pd.DataFrame({'nama menu' : [oerder_menu], 'harga' : [price_o],'qty' : [quanti]})
+
+# Create an empty DataFrame
+menu = pd.DataFrame({'nama menu': order_menu, 'harga': price_o, 'qty': quanti})
 
 def add_in(m, p):
     price_o.append(p)
-    oerder_menu.append(m)
+    order_menu.append(m)
+    # Update DataFrame
+    global menu
+    menu = pd.DataFrame({'nama menu': order_menu, 'harga': price_o, 'qty': quanti})
 
-
-menus= ['ayam', 'kaki', 'lai']
-menud = [80, 90, 10]
-
-harga = [10, 20, 5]
-frame = ctk.CTk()
-frame.geometry(f"{500}x{500}")
-
-menu1 = 'ayam'
-harga1 = 900
 def add():
-    qt = ctk.CTkEntry(frame, width= 50, height=10, bg_color='#D9D9D9')
+    qt = ctk.CTkEntry(frame, width=50, height=10, bg_color='#D9D9D9')
     qt.place(x=50, y=5)
     quanti.append(qt)
-ad = ctk.CTkButton(frame, width=9, height=8, text='add', command=add() )
-ad.place(x=100, y=5)
-menu_1 = ctk.CTkButton(frame, width=9, height=8, text=menu1, command=add_in(menus[0], menud[0]))
-menu_1.place(x=0, y=5)
 
+menus = ['ayam', 'kaki', 'lai']
+menud = [80, 90, 10]
+
+# Create the main window
+frame = ctk.CTk()
+frame.geometry("500x500")
+
+# Adding quantity entry field
+add_button = ctk.CTkButton(frame, width=9, height=8, text='add', command=add)
+add_button.place(x=100, y=5)
+
+# Adding menu button
+menu_1_button = ctk.CTkButton(frame, width=9, height=8, text=menus[0], command=lambda: add_in(menus[0], menud[0]))
+menu_1_button.place(x=0, y=5)
+
+# Start the main loop
 frame.mainloop()
+
+# Print the updated DataFrame after closing the window
 print(menu)
