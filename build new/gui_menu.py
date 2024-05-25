@@ -11,21 +11,21 @@ from tkinter import Tk, Canvas, Entry, Text, Button, PhotoImage
 
 
 OUTPUT_PATH = Path(__file__).parent
-ASSETS_PATH = OUTPUT_PATH / Path(r"C:\Users\USER\indoor\New folder (5)\build\assets\frame0")
+ASSETS_PATH = OUTPUT_PATH / Path(r"C:\Users\USER\git rep\CashierAndForecasting\build new\assets\frame11")
 
 
 def relative_to_assets(path: str) -> Path:
     return ASSETS_PATH / Path(path)
 
 
-windowZ = Tk()
+windowW = Tk()
 
-windowZ.geometry("1280x720")
-windowZ.configure(bg = "#E8DFCA")
+windowW.geometry("1280x720")
+windowW.configure(bg = "#E8DFCA")
 
 
 canvas = Canvas(
-    windowZ,
+    windowW,
     bg = "#E8DFCA",
     height = 720,
     width = 1280,
@@ -90,14 +90,14 @@ button_1 = Button(
     relief="flat"
 )
 button_1.place(
-    x=173.66668701171875,
+    x=173.666748046875,
     y=315.8039245605469,
     width=36.372093200683594,
     height=20.3137264251709
 )
 
 canvas.create_text(
-    51.0,
+    80.0,
     286.0,
     anchor="nw",
     text="Americano",
@@ -158,7 +158,7 @@ button_2.place(
 )
 
 canvas.create_text(
-    301.0,
+    350.0,
     286.0,
     anchor="nw",
     text="Espresso",
@@ -219,7 +219,7 @@ button_3.place(
 )
 
 canvas.create_text(
-    547.0,
+    610.0,
     287.0,
     anchor="nw",
     text="Latte",
@@ -280,7 +280,7 @@ button_4.place(
 )
 
 canvas.create_text(
-    792.0,
+    830.0,
     287.0,
     anchor="nw",
     text="Cappuccino",
@@ -342,14 +342,14 @@ button_5 = Button(
     relief="flat"
 )
 button_5.place(
-    x=1161.3333740234375,
+    x=1161.33349609375,
     y=315.8039245605469,
     width=35.97674560546875,
     height=20.3137264251709
 )
 
 canvas.create_text(
-    1040.0,
+    1080.0,
     286.0,
     anchor="nw",
     text="Cold Brew",
@@ -395,14 +395,14 @@ button_6 = Button(
     relief="flat"
 )
 button_6.place(
-    x=1159.3333740234375,
+    x=1159.33349609375,
     y=608.6797485351562,
     width=35.97674560546875,
     height=21.045751571655273
 )
 
 canvas.create_text(
-    1038.0,
+    1080.0,
     578.0,
     anchor="nw",
     text="Mocha Latte",
@@ -463,7 +463,7 @@ button_7.place(
 )
 
 canvas.create_text(
-    792.0,
+    840.0,
     578.0,
     anchor="nw",
     text="Vanilla Latte",
@@ -524,7 +524,7 @@ button_8.place(
 )
 
 canvas.create_text(
-    547.0,
+    580.0,
     578.0,
     anchor="nw",
     text="Hazelnut Latte",
@@ -593,12 +593,12 @@ button_9.place(
 )
 
 canvas.create_text(
-    297.0,
+    360.0,
     578.0,
     anchor="nw",
     text="Thai Tea",
     fill="#000000",
-    font=("IstokWeb Bold", 20 * -1)
+    font=("Helvetica", 18 * -1)
 )
 
 canvas.create_rectangle(
@@ -639,17 +639,17 @@ button_10 = Button(
     relief="flat"
 )
 button_10.place(
-    x=171.66668701171875,
+    x=171.6666259765625,
     y=608.6797485351562,
     width=37.55813980102539,
     height=21.045751571655273
 )
 
 canvas.create_text(
-    45.0,
+    80.0,
     578.0,
     anchor="nw",
-    text="Vanilla Latte",
+    text="Matcha Latte",
     fill="#000000",
     font=("IstokWeb Bold", 20 * -1)
 )
@@ -667,7 +667,7 @@ button_image_11 = PhotoImage(
 button_11 = Button(
     image=button_image_11,
     borderwidth=0,
-    highlightthickness=0,
+    highlightthickness=0, bg='#4F6F52',
     command=lambda: print("button_11 clicked"),
     relief="flat"
 )
@@ -677,5 +677,21 @@ button_11.place(
     width=148.0,
     height=41.0
 )
-windowZ.resizable(False, False)
-windowZ.mainloop()
+
+button_image_12 = PhotoImage(
+    file=relative_to_assets("button_12.png"))
+button_12 = Button(
+    image=button_image_12, bg='#4F6F52',
+    borderwidth=0,
+    highlightthickness=0,
+    command=lambda: print("button_12 clicked"),
+    relief="flat"
+)
+button_12.place(
+    x=29.0,
+    y=20.0,
+    width=63.0,
+    height=41.0
+)
+windowW.resizable(False, False)
+windowW.mainloop()

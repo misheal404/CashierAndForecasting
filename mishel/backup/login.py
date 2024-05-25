@@ -113,3 +113,4 @@ def sign_in():
     )
     windowA.resizable(False, False)
     windowA.mainloop()
+sign_in()

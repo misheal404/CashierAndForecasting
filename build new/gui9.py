@@ -11,21 +11,21 @@ from tkinter import Tk, Canvas, Entry, Text, Button, PhotoImage
 
 
 OUTPUT_PATH = Path(__file__).parent
-ASSETS_PATH = OUTPUT_PATH / Path(r"C:\Users\USER\indoor\New folder (3)\build\assets\frame9")
+ASSETS_PATH = OUTPUT_PATH / Path(r"C:\Users\USER\git rep\CashierAndForecasting\build new\assets\frame9")
 
 
 def relative_to_assets(path: str) -> Path:
     return ASSETS_PATH / Path(path)
 
 
-window = Tk()
+windowX = Tk()
 
-window.geometry("1280x720")
-window.configure(bg = "#FFFFFF")
+windowX.geometry("1280x720")
+windowX.configure(bg = "#FFFFFF")
 
 
 canvas = Canvas(
-    window,
+    windowX,
     bg = "#FFFFFF",
     height = 720,
     width = 1280,
@@ -67,5 +67,5 @@ button_1.place(
     width=331.21142578125,
     height=71.58737182617188
 )
-window.resizable(False, False)
-window.mainloop()
+windowX.resizable(False, False)
+windowX.mainloop()

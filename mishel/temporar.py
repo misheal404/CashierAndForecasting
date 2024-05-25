@@ -1,28 +1,43 @@
-import tkinter as tk
+import pandas as pd
+import customtkinter as ctk
 
-# Create a list to store the entries
-entry_list = []
+# Initialize empty lists to store menu data
+order_menu = []
+price_o = []
+quanti = []
 
-def add_entry():
-    # Retrieve text from the entry widget
-    entry_text = entry.get()
-    
-    # Append the text to the list
-    entry_list.append(entry_text)
-    
-    # Optionally, print the updated list
-    print(entry_list)
+# Create an empty DataFrame
+#menu = pd.DataFrame({'nama menu': order_menu, 'harga': price_o, 'qty': quanti})
 
-# Create a Tkinter window
-root = tk.Tk()
+def add_in(m, p):
+    price_o.append(p)
+    order_menu.append(m)
+    # Update DataFrame
+ 
+menu = pd.DataFrame({'nama menu': order_menu, 'harga': price_o, 'qty': quanti})
 
-# Create an Entry widget
-entry = tk.Entry(root)
-entry.pack()
+def add():
+    qt = ctk.CTkEntry(frame, width=50, height=10, bg_color='#D9D9D9')
+    qt.place(x=50, y=5)
+    quanti.append(qt)
 
-# Create a button to add the entry to the list
-add_button = tk.Button(root, text="Add Entry", command=add_entry)
-add_button.pack()
+menus = ['ayam', 'kaki', 'lai']
+menud = [80, 90, 10]
 
-# Run the Tkinter event loop
-root.mainloop()
+# Create the main window
+frame = ctk.CTk()
+frame.geometry("500x500")
+
+# Adding quantity entry field
+add_button = ctk.CTkButton(frame, width=9, height=8, text='add', command=add)
+add_button.place(x=100, y=5)
+
+# Adding menu button
+menu_1_button = ctk.CTkButton(frame, width=9, height=8, text=menus[0], command=lambda: add_in(menus[0], menud[0]))
+menu_1_button.place(x=0, y=5)
+
+# Start the main loop
+frame.mainloop()
+
+# Print the updated DataFrame after closing the window
+print(menu)

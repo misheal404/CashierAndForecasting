@@ -7,14 +7,14 @@ price_o = []
 quanti = []
 
 # Create an empty DataFrame
-menu = pd.DataFrame({'nama menu': order_menu, 'harga': price_o, 'qty': quanti})
+#menu = pd.DataFrame({'nama menu': order_menu, 'harga': price_o, 'qty': quanti})
 
 def add_in(m, p):
     price_o.append(p)
     order_menu.append(m)
     # Update DataFrame
-    global menu
-    menu = pd.DataFrame({'nama menu': order_menu, 'harga': price_o, 'qty': quanti})
+ 
+menu = pd.DataFrame({'nama menu': order_menu, 'harga': price_o, 'qty': quanti})
 
 def add():
     qt = ctk.CTkEntry(frame, width=50, height=10, bg_color='#D9D9D9')
