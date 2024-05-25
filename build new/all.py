@@ -1,11 +1,35 @@
 from tkinter import Toplevel
 import customtkinter as ctk
 from pathlib import Path
+import pandas as pd
+import os
 
 from tkinter import Tk, Canvas, Entry, Text, Button, PhotoImage
 def open_window_2(w1, w2):
     w1.destroy()
     w2()
+def csv_all(dataframe, file_name):
+    file_path = os.path.join("C:\\Users\\USER\\git rep\\CashierAndForecasting\\build new\\database", f"{file_name}.csv")
+    # Check if the file already exists
+    if os.path.exists(file_path):
+        dataframe.to_csv(file_path, mode='a', header=False,  index=False)
+    else:
+        dataframe.to_csv(file_path, index=False)
+def on_button_click(usn_entry, pw_entry, window1, next_func):
+    # Add your button click logic here
+    usn = []
+    pw = []
+    usn.append(usn_entry.get())
+    pw.append(pw_entry.get())
+    dfU = pd.DataFrame({
+    'Username' : usn,
+    "Password": pw,
+    })
+    csv_all(dfU, 'login data')
+    open_window_2(window1, next_func)
+    print(dfU)
+    pass
+
 def main():
     
     OUTPUT_PATH = Path(__file__).parent
@@ -204,10 +228,10 @@ def sign_in():
 
     entry_image_1 = PhotoImage(
         file=relative_to_assets("entry_1.png"))
-    entry_bg_1 = canvas.create_image(
+    entry_bg_1 = canvas.create_rectangle(
         668.0,
-        278.0,
-        image=entry_image_1
+        278.0, 381, 246,
+        fill='#EADBC8', outline=''
     )
     entry_1 = Entry(
         bd=0,
@@ -224,10 +248,10 @@ def sign_in():
 
     entry_image_2 = PhotoImage(
         file=relative_to_assets("entry_2.png"))
-    entry_bg_2 = canvas.create_image(
+    entry_bg_2 = canvas.create_rectangle(
         668.0,
-        408.0,
-        image=entry_image_2
+        408.0, 381, 376, 
+        fill='#EADBC8', outline=''
     )
 
     entry_2 = Entry(
@@ -247,9 +271,9 @@ def sign_in():
         file=relative_to_assets("button_1.png"))
     button_1 = Button(
         image=button_image_1,
-        borderwidth=0, text='password', fg='black',
+        borderwidth=0, fg='black',bg='#EADBC8',
         highlightthickness=0,
-        command=lambda: open_window_2(windowA, home),
+        command=lambda: on_button_click(entry_1, entry_2, windowA, home) ,
         relief="flat"
     )
     button_1.place(
@@ -1851,4 +1875,4 @@ def sell_home():
     windowX.mainloop()
 
 #menu()
-main()
+sign_in()
