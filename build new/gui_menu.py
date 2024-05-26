@@ -8,6 +8,49 @@ from pathlib import Path
 # from tkinter import *
 # Explicit imports to satisfy Flake8
 from tkinter import Tk, Canvas, Entry, Text, Button, PhotoImage
+import pandas as pd
+import os 
+
+#LOGIC
+
+def csv_all(dataframe, file_name):
+    file_path = os.path.join("C:\\Users\\USER\\belajar\\pandas\\trial", f"{file_name}.csv")
+    if os.path.exists(file_path):
+        dataframe.to_csv(file_path, mode='a', header=False, index=False)
+    else:
+        dataframe.to_csv(file_path, index=False)
+
+menu = []
+harga = []
+total = []
+amm = []
+
+dfZ = pd.DataFrame({
+    'Menu': ['Americano', 'Espresso', 'Latte', 'Cappucino', 'Cold Brew', 'Matcha Latte', 'Hazelnut Latte', 'Mocha Latte'],
+    'Harga': [25000, 28000, 33000, 33000, 33000, 40000, 40000, 40000]
+})
+
+menuC = ['Americano', 'Espresso', 'Latte', 'Cappucino', 'Cold Brew', 'Matcha Latte','Thai Tea', 'Hazelnut Latte', 'Vanilla Latte','Mocha Latte']
+
+def add(menu_num, amm_entry):
+    menu_pilihan = menuC[menu_num]
+    jumlah = int(amm_entry.get())
+    if menu_pilihan in dfZ['Menu'].values:
+        harga_pilihan = dfZ[dfZ['Menu'] == menu_pilihan]['Harga'].values[0]
+        total_harga = harga_pilihan * jumlah
+        menu.append(menu_pilihan)
+        harga.append(harga_pilihan)
+        amm.append(jumlah)
+        total.append(total_harga)
+
+def done():
+    dfA = pd.DataFrame({
+        'Menu': menu,
+        'Harga': harga,
+        'Satuan': amm,
+        'Total': total
+    })
+    csv_all(dfA, 'menuA')
 
 
 OUTPUT_PATH = Path(__file__).parent
@@ -86,7 +129,7 @@ button_1 = Button(
     image=button_image_1,
     borderwidth=0,
     highlightthickness=0,
-    command=lambda: print("button_1 clicked"),
+    command=lambda: add(0, entry_1),
     relief="flat"
 )
 button_1.place(
@@ -147,7 +190,7 @@ button_2 = Button(
     image=button_image_2,
     borderwidth=0,
     highlightthickness=0,
-    command=lambda: print("button_2 clicked"),
+    command=lambda: add(1, entry_2),
     relief="flat"
 )
 button_2.place(
@@ -208,7 +251,7 @@ button_3 = Button(
     image=button_image_3,
     borderwidth=0,
     highlightthickness=0,
-    command=lambda: print("button_3 clicked"),
+    command=lambda: add(2, entry_3),
     relief="flat"
 )
 button_3.place(
@@ -269,7 +312,7 @@ button_4 = Button(
     image=button_image_4,
     borderwidth=0,
     highlightthickness=0,
-    command=lambda: print("button_4 clicked"),
+    command=lambda: add(3, entry_4),
     relief="flat"
 )
 button_4.place(
@@ -338,7 +381,7 @@ button_5 = Button(
     image=button_image_5,
     borderwidth=0,
     highlightthickness=0,
-    command=lambda: print("button_5 clicked"),
+    command=lambda: add(4, entry_5),
     relief="flat"
 )
 button_5.place(
@@ -391,7 +434,7 @@ button_6 = Button(
     image=button_image_6,
     borderwidth=0,
     highlightthickness=0,
-    command=lambda: print("button_6 clicked"),
+    command=lambda: add(9, entry_6),
     relief="flat"
 )
 button_6.place(
@@ -452,7 +495,7 @@ button_7 = Button(
     image=button_image_7,
     borderwidth=0,
     highlightthickness=0,
-    command=lambda: print("button_7 clicked"),
+    command=lambda: add(8, entry_7),
     relief="flat"
 )
 button_7.place(
@@ -513,7 +556,7 @@ button_8 = Button(
     image=button_image_8,
     borderwidth=0,
     highlightthickness=0,
-    command=lambda: print("button_8 clicked"),
+    command=lambda: add(7, entry_8),
     relief="flat"
 )
 button_8.place(
@@ -582,7 +625,7 @@ button_9 = Button(
     image=button_image_9,
     borderwidth=0,
     highlightthickness=0,
-    command=lambda: print("button_9 clicked"),
+    command=lambda: add(6, entry_9),
     relief="flat"
 )
 button_9.place(
@@ -635,7 +678,7 @@ button_10 = Button(
     image=button_image_10,
     borderwidth=0,
     highlightthickness=0,
-    command=lambda: print("button_10 clicked"),
+    command=lambda: add(5, entry_10),
     relief="flat"
 )
 button_10.place(
@@ -668,7 +711,7 @@ button_11 = Button(
     image=button_image_11,
     borderwidth=0,
     highlightthickness=0, bg='#4F6F52',
-    command=lambda: print("button_11 clicked"),
+    command=lambda: done(),
     relief="flat"
 )
 button_11.place(
