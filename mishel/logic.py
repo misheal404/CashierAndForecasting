@@ -140,7 +140,7 @@ if ard == 'yes':
             print('Total Payment    :', total_sub)
             print('Thank you for shopping at The Chronicle')
     elif choice == '2':
-        r = 'C:\\Users\\USER\\belajar\\pandas\\trial\\tes_logic.csv'
+        r = 'C:\\Users\\USER\\git rep\\CashierAndForecasting\\build new\\database\\tes_logic.csv'
         fg = pd.read_csv(r)
         print('--------------------------------------------------------')
         print('S E L L I N G   R E P O R T')
