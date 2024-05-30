@@ -3,6 +3,8 @@ import customtkinter as ctk
 from pathlib import Path
 import pandas as pd
 import os
+import datetime
+from tkinter import ttk
 from tkinter import Tk, Canvas, Entry, Text, Button, PhotoImage
 
 #L O G I C  F U N C T I O N
@@ -54,13 +56,21 @@ def add(menu_num, amm_entry):
         amm.append(jumlah)
         total.append(total_harga)
 
+
 def done(w1):
     dfA = pd.DataFrame({
         'Menu': menu_s,
         'Harga': harga,
         'Satuan': amm,
-        'Total': total
+        'Total': total,
+        'Timestamp': datetime.datetime.now()
     })
+    dfSum = pd.DataFrame({
+        'Menu': menu_s,
+        'Harga': harga,
+        'Satuan': amm,
+        'Total': total
+        })
     csv_all(dfA, 'menu_all')
     open_window_2(w1, summary)
 
@@ -1229,25 +1239,33 @@ def summary():
         anchor="nw",
         text="Menu",
         fill="#000000",
-        font=("Inder Regular", 35 * -1)
+        font=("Inder Regular", 25 * -1)
     )
 
     canvas.create_text(
-        799.0,
+        745.0,
         193.0,
         anchor="nw",
         text="Qty",
         fill="#000000",
-        font=("Inder Regular", 35 * -1)
+        font=("Inder Regular", 25 * -1)
     )
 
     canvas.create_text(
-        1046.0,
+        900.0,
         193.0,
         anchor="nw",
         text="Price",
         fill="#000000",
-        font=("Inder Regular", 35 * -1)
+        font=("Inder Regular", 25 * -1)
+    )
+    canvas.create_text(
+        1070.0,
+        193.0,
+        anchor="nw",
+        text="Total",
+        fill="#000000",
+        font=("Inder Regular", 25 * -1)
     )
 
     canvas.create_text(
@@ -1292,6 +1310,8 @@ def summary():
         fill="#000000",
         font=("InriaSans Bold", 25 * -1)
     )
+
+    
     WindowD.resizable(False, False)
     WindowD.mainloop()
 
@@ -1903,4 +1923,4 @@ def sell_home():
     windowX.mainloop()
 
 #menu()
-menu()
+summary()
