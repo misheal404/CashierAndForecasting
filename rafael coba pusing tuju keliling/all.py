@@ -481,14 +481,29 @@ def menu():
     def relative_to_assets(path: str) -> Path:
         return ASSETS_PATH / Path(path)
     
-    if not os.path.isfile('pembelian.csv'):
-        with open('pembelian.csv', mode='w', newline=''):
+    if not os.path.isfile('NOTA PEMBELIAN.csv'):
+        with open('NOTA PEMBELIAN.csv', mode='w', newline=''):
             pass
 
     def add_to_csv(kopi, jumlah):
-        with open('pembelian.csv', mode='a', newline='') as file:
+        harga_per_pcs = harga_kopi[kopi]
+        total_harga = harga_per_pcs * jumlah
+        data_baru = [kopi, jumlah, harga_per_pcs, total_harga]
+        with open('NOTA PEMBELIAN.csv', mode='r', newline='') as file:
+            reader = csv.reader(file)
+            rows = list(reader)
+            item_ditemukan = False
+            for row in rows:
+                if row[0] == kopi:
+                    row[:] = data_baru
+                    item_ditemukan = True
+                    break
+            if not item_ditemukan:
+                rows.append(data_baru)
+
+        with open('NOTA PEMBELIAN.csv', mode='w', newline='') as file:
             writer = csv.writer(file)
-            writer.writerow([kopi, jumlah, harga_kopi[kopi] * jumlah])
+            writer.writerows(rows)
     
     def add_americano(entry):
         jumlah = int(entry.get())
@@ -529,19 +544,6 @@ def menu():
     def add_mocha_latte(entry):
         jumlah = int(entry.get())
         add_to_csv("Mocha Latte", jumlah)
-
-    def done_button_pressed():
-        waktu_pembelian = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        add_americano(entry_americanocoffee1, waktu_pembelian)
-        add_espresso(entry_espressocoffee2, waktu_pembelian)
-        add_latte(entry_lattecoffee3, waktu_pembelian)
-        add_cappuccino(entry_cappucinocoffee4, waktu_pembelian)
-        add_cold_brew(entry_coldbrewcoffee5, waktu_pembelian)
-        add_matcha_latte(entry_matchalattecoffee10, waktu_pembelian)
-        add_thai_tea(entry_thaiteacoffee9, waktu_pembelian)
-        add_hazelnut_latte(entry_hazelnutlattecoffee8, waktu_pembelian)
-        add_vanilla_latte(entry_coffeevanillalatte7, waktu_pembelian)
-        add_mocha_latte(entry_mochalattecoffee6, waktu_pembelian)
 
         open_window_2(windowW, summary)
 
@@ -1221,25 +1223,50 @@ def menu():
         height=41.0
     )
     windowW.resizable(False, False)
-
-
     windowW.mainloop()
 
+from tkinter import Tk, Canvas, PhotoImage, Button, Entry
+from pathlib import Path
+
+from tkinter import Tk, Canvas, PhotoImage, Button, Entry
+from pathlib import Path
+
+import csv
+from pathlib import Path
+from tkinter import Tk, Canvas, Button, PhotoImage, Entry, Label
+
 def summary():
-
     OUTPUT_PATH = Path(__file__).parent
-    ASSETS_PATH = OUTPUT_PATH / Path(r"C:\Users\USER\git rep\CashierAndForecasting\build new\assets\frame4")
-
+    ASSETS_PATH = OUTPUT_PATH / Path("assets/frame4")
 
     def relative_to_assets(path: str) -> Path:
         return ASSETS_PATH / Path(path)
 
+    def open_window_2(current_window, new_window_function):
+        current_window.destroy()
+        new_window_function()
+
+    def read_csv(file_path):
+        data = []
+        total = 0
+        with open(file_path, mode='r', newline='') as file:
+            csv_reader = csv.reader(file)
+            for row in csv_reader:
+                kopi, jumlah, harga_per_pcs, total_harga = row
+                data.append((kopi, jumlah, total_harga))
+                total += int(total_harga)
+        return data, total
+
+    def save_to_csv(name, date):
+        file_path = OUTPUT_PATH / "NAME DATE.csv"
+        with open(file_path, mode='w', newline='') as file:
+            csv_writer = csv.writer(file)
+            csv_writer.writerow(["Name", "Date"])
+            csv_writer.writerow([name, date])
 
     WindowD = Tk()
-
     WindowD.geometry("1280x720")
     WindowD.configure(bg = "#F5EFE6")
-
 
     canvas = Canvas(
         WindowD,
@@ -1270,7 +1297,7 @@ def summary():
     )
 
     button_image_1 = PhotoImage(
-        file=relative_to_assets(r"C:\Users\rafae\OneDrive\Dokumen\build\CashierAndForecasting\build new\assets\frame4\button_1.png"))
+        file=relative_to_assets("button_1.png"))
     button_1 = Button(
         image=button_image_1, bg='#D1D1D1',
         borderwidth=0,
@@ -1286,7 +1313,7 @@ def summary():
     )
 
     button_image_2 = PhotoImage(
-        file=relative_to_assets(r"C:\Users\rafae\OneDrive\Dokumen\build\CashierAndForecasting\build new\assets\frame4\button_2.png"))
+        file=relative_to_assets("button_2.png"))
     button_2 = Button(
         image=button_image_2, bg='#D1D1D1',
         borderwidth=0,
@@ -1311,7 +1338,7 @@ def summary():
 
     canvas.create_text(
         482.0,
-        193.0,
+        143.0,
         anchor="nw",
         text="Menu",
         fill="#000000",
@@ -1320,7 +1347,7 @@ def summary():
 
     canvas.create_text(
         799.0,
-        193.0,
+        143.0,
         anchor="nw",
         text="Qty",
         fill="#000000",
@@ -1329,7 +1356,7 @@ def summary():
 
     canvas.create_text(
         1046.0,
-        193.0,
+        143.0,
         anchor="nw",
         text="Price",
         fill="#000000",
@@ -1362,6 +1389,10 @@ def summary():
         font=("InriaSans Bold", 25 * -1)
     )
 
+    # Add an Entry widget for "name"
+    name_entry = Entry(WindowD, bd=0, bg="#F5EFE6", font=("InriaSans Regular", 20), justify="left")
+    name_entry.place(x=150.0, y=197.0, width=254.0, height=40.0)
+
     canvas.create_rectangle(
         88.0,
         356.0,
@@ -1371,13 +1402,71 @@ def summary():
         outline="")
 
     canvas.create_text(
-        59.0,
+        74.0,
         314.0,
         anchor="nw",
         text="date",
         fill="#000000",
         font=("InriaSans Bold", 25 * -1)
     )
+
+    # Add an Entry widget for "date"
+    date_entry = Entry(WindowD, bd=0, bg="#F5EFE6", font=("InriaSans Regular", 20), justify="left")
+    date_entry.place(x=150.0, y=310.0, width=294.0, height=40.0)
+
+    # Add a Save button to save name and date to CSV
+    save_button = Button(
+        WindowD,
+        text="Save",
+        command=lambda: save_to_csv(name_entry.get(), date_entry.get()),
+        font=("InriaSans Bold", 20),
+        bg="#D1D1D1",
+        relief="flat"
+    )
+    save_button.place(x=150.0, y=370.0, width=100.0, height=40.0)
+
+    # Reading data from CSV
+    data, total_amount = read_csv(relative_to_assets(r"C:\Users\rafae\OneDrive\Dokumen\build\NOTA PEMBELIAN.csv"))
+
+    # Display data
+    y_position = 200
+    for kopi, jumlah, total_harga in data:
+        canvas.create_text(
+            482.0,
+            y_position,
+            anchor="nw",
+            text=kopi,
+            fill="#000000",
+            font=("Inder Regular", 20 * -1)
+        )
+        canvas.create_text(
+            799.0,
+            y_position,
+            anchor="nw",
+            text=jumlah,
+            fill="#000000",
+            font=("Inder Regular", 25 * -1)
+        )
+        canvas.create_text(
+            1046.0,
+            y_position,
+            anchor="nw",
+            text=total_harga,
+            fill="#000000",
+            font=("Inder Regular", 25 * -1)
+        )
+        y_position += 40
+
+    # Display total amount
+    canvas.create_text(
+        900.0,
+        618.0,
+        anchor="nw",
+        text=f"{total_amount}",
+        fill="#000000",
+        font=("Inder Regular", 35 * -1)
+    )
+
     WindowD.resizable(False, False)
     WindowD.mainloop()
 
@@ -1518,16 +1607,16 @@ def emoney():
         font=("InriaSans Bold", 40 * -1)
     )
 
-    button_image_1 = PhotoImage(
+    button_imageBACK_1 = PhotoImage(
         file=relative_to_assets(r"C:\Users\rafae\OneDrive\Dokumen\build\CashierAndForecasting\build new\assets\frame7\button_1.png"))
-    button_1 = Button(
-        image=button_image_1, bg='#D1D1D1',
+    buttonBACK_1 = Button(
+        image=button_imageBACK_1, bg='#D1D1D1',
         borderwidth=0,
         highlightthickness=0,
         command=lambda: open_window_2(WindowF, choose_payment),
         relief="flat"
     )
-    button_1.place(
+    buttonBACK_1.place(
         x=24.0,
         y=14.0,
         width=99.0,
@@ -1644,21 +1733,52 @@ def emoney():
     WindowF.resizable(False, False)
     WindowF.mainloop()
 
-def cash():
-        
-    OUTPUT_PATH = Path(__file__).parent
-    ASSETS_PATH = OUTPUT_PATH / Path(r"C:\Users\USER\git rep\CashierAndForecasting\build new\assets\frame6")
+from tkinter import Tk, Canvas, Button, Entry, StringVar
+from pathlib import Path
+import csv
 
+from tkinter import Tk, Canvas, Button, Entry, StringVar
+from pathlib import Path
+import csv
+
+from tkinter import Tk, Canvas, Button, Entry, StringVar
+from pathlib import Path
+import csv
+
+def cash():
+    OUTPUT_PATH = Path(__file__).parent
+    NAME_DATE_PATH = Path(r"C:\Users\rafae\OneDrive\Dokumen\build\CashierAndForecasting\rafael coba pusing tuju keliling\NAME DATE.csv")
+    NOTA_PEMBELIAN_PATH = Path(r"C:\Users\rafae\OneDrive\Dokumen\build\NOTA PEMBELIAN.csv")
+    ASSETS_PATH = OUTPUT_PATH / Path("assets/frame6")
 
     def relative_to_assets(path: str) -> Path:
         return ASSETS_PATH / Path(path)
 
+    def read_name_date_csv(file_path):
+        with open(file_path, mode='r', newline='') as file:
+            csv_reader = csv.reader(file)
+            next(csv_reader)  # Skip header
+            row = next(csv_reader)  # Read the first row
+            name, date = row
+        return name, date
+
+    def read_total_from_csv(file_path):
+        total = 0
+        with open(file_path, mode='r', newline='') as file:
+            csv_reader = csv.reader(file)
+            for row in csv_reader:
+                total_harga = int(row[3])
+                total += total_harga
+        return total
+
+    def calculate_return():
+        cash_paid = int(cash_entry.get())
+        return_amount = cash_paid - total
+        return_var.set(f"{return_amount}")
 
     WindowG = Tk()
-
     WindowG.geometry("1280x720")
     WindowG.configure(bg = "#F5EFE6")
-
 
     canvas = Canvas(
         WindowG,
@@ -1666,12 +1786,11 @@ def cash():
         height = 720,
         width = 1280,
         bd = 0,
-        highlightthickness = 0,
-        relief = "ridge"
+        highlightthickness=0,
+        relief="ridge"
     )
 
     canvas.place(x = 0, y = 0)
-    #coba
 
     canvas.create_rectangle(
         0.0,
@@ -1690,16 +1809,16 @@ def cash():
         font=("InriaSans Bold", 40 * -1)
     )
 
-    button_image_1 = PhotoImage(
-        file=relative_to_assets(r"C:\Users\rafae\OneDrive\Dokumen\build\CashierAndForecasting\build new\assets\frame6\button_1.png"))
-    button_1 = Button(
-        image=button_image_1,
+    button_imageBACK_1 = PhotoImage(
+        file=relative_to_assets("button_1.png"))
+    buttonBACK_1 = Button(
+        image=button_imageBACK_1,
         borderwidth=0,
         highlightthickness=0,
-        command=lambda: open_window_2(WindowG, choose_payment),
+        command=lambda: open_window_2(WindowG, choose_payment),  # Replace with appropriate function
         relief="flat"
     )
-    button_1.place(
+    buttonBACK_1.place(
         x=24.0,
         y=14.0,
         width=99.0,
@@ -1751,46 +1870,6 @@ def cash():
         font=("InriaSerif Bold", 30 * -1)
     )
 
-    entry_image_1 = PhotoImage(
-        file=relative_to_assets(r"C:\Users\rafae\OneDrive\Dokumen\build\CashierAndForecasting\build new\assets\frame6\entry_1.png"))
-    entry_bg_1 = canvas.create_image(
-        266.5,
-        240.0,
-        image=entry_image_1
-    )
-    entry_1 = Entry(
-        bd=0,
-        bg="#FFFFFF",
-        fg="#000716",
-        highlightthickness=0
-    )
-    entry_1.place(
-        x=95.0,
-        y=240.0,
-        width=343.0,
-        height=-2.0
-    )
-
-    entry_image_2 = PhotoImage(
-        file=relative_to_assets(r"C:\Users\rafae\OneDrive\Dokumen\build\CashierAndForecasting\build new\assets\frame6\entry_2.png"))
-    entry_bg_2 = canvas.create_image(
-        266.5,
-        370.0,
-        image=entry_image_2
-    )
-    entry_2 = Entry(
-        bd=0,
-        bg="#FFFFFF",
-        fg="#000716",
-        highlightthickness=0
-    )
-    entry_2.place(
-        x=95.0,
-        y=370.0,
-        width=343.0,
-        height=-2.0
-    )
-
     canvas.create_rectangle(
         751.0,
         237.0,
@@ -1815,24 +1894,106 @@ def cash():
         fill="#000000",
         outline="")
 
-    button_image_2 = PhotoImage(
-        file=relative_to_assets(r"C:\Users\rafae\OneDrive\Dokumen\build\CashierAndForecasting\build new\assets\frame6\button_2.png"))
-    button_2 = Button(
-        image=button_image_2,
+    button_imageNEXT_2 = PhotoImage(
+        file=relative_to_assets("button_2.png"))
+    buttonNEXT_2 = Button(
+        image=button_imageNEXT_2,
         borderwidth=0,
         highlightthickness=0,
-        command=lambda: print("button_2 clicked"),
+        command=lambda: open_window_2(WindowG, success),
         relief="flat"
     )
-    button_2.place(
+    buttonNEXT_2.place(
         x=123.0,
         y=612.0,
         width=1028.0,
         height=75.0
     )
+
+    # Load data from NAME DATE.csv and NOTA PEMBELIAN.csv
+    name, date = read_name_date_csv(NAME_DATE_PATH)
+    total = read_total_from_csv(NOTA_PEMBELIAN_PATH)
+
+    # Display name, date, and total amount
+    canvas.create_text(
+        92.0,
+        200.0,
+        anchor="nw",
+        text=f"{name}",
+        fill="#000000",
+        font=("InriaSerif Bold", 30 * -1)
+    )
+
+    canvas.create_text(
+        95.0,
+        330.0,
+        anchor="nw",
+        text=f"{date}",
+        fill="#000000",
+        font=("InriaSerif Bold", 30 * -1)
+    )
+    buttonOK = Button(
+        WindowG,
+        text="OK",
+        command=calculate_return,
+        bg="#FFFFFF",
+        font=("InriaSerif Bold", 15)
+    )
+    buttonOK.place(
+        x=952.0,
+        y=480.0,
+        width=100.0,
+        height=50.0
+    )
+    canvas.create_text(
+        950.0,
+        149.0,
+        anchor="nw",
+        text=f"{total}",
+        fill="#000000",
+        font=("InriaSerif Bold", 30 * -1)
+    )
+
+    cash_entry = Entry(
+        WindowG,
+        bd=0,
+        bg="#FFFFFF",
+        highlightthickness=0
+    )
+    cash_entry.place(
+        x=752.0,
+        y=329.0,
+        width=343.0,
+        height=50.0
+    )
+
+    return_var = StringVar()
+    return_label = canvas.create_text(
+        950.0,
+        436.0,
+        anchor="nw",
+        textvariable=return_var,
+        fill="#000000",
+        font=("InriaSerif Bold", 30 * -1)
+    )
+
+    # OK Button
+    buttonOK = Button(
+        WindowG,
+        text="OK",
+        command=calculate_return,
+        bg="#FFFFFF",
+        font=("InriaSerif Bold", 15)
+    )
+    buttonOK.place(
+        x=952.0,
+        y=480.0,
+        width=100.0,
+        height=50.0
+    )
+
     WindowG.resizable(False, False)
     WindowG.mainloop()
-
 def success():
         
     OUTPUT_PATH = Path(__file__).parent
