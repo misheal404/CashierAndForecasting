@@ -6,71 +6,68 @@ import matplotlib.dates as mdates
 import tkinter as tk
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 
-# Function to group and sum Subtotal by Item
 def item_category(DataFrame):
-    jumlah = DataFrame.groupby('Item')['Subtotal'].sum().reset_index()
-    return jumlah
+        jumlah = DataFrame.groupby('Item')['Subtotal'].sum().reset_index()
+        return jumlah
 
-# Function to save DataFrame to a CSV file, appending without headers if file exists and there's new data
+    # Function to save DataFrame to a CSV file, appending without headers if file exists and there's new data
 def csv_all(dataframe, file_name):
-    file_path = os.path.join("C:\\Users\\USER\\git rep\\CashierAndForecasting\\chronicle\\data", f"{file_name}.csv")
-    
-    # Check if the file exists
-    if os.path.exists(file_path):
-        existing_df = pd.read_csv(file_path)
-        if not existing_df.equals(dataframe):
-            dataframe.to_csv(file_path, mode='a', index=False, header=False)
-            print(f"DataFrame updated and saved to {file_path}")
+        file_path = os.path.join("C:\\Users\\USER\\git rep\\CashierAndForecasting\\chronicle\\data", f"{file_name}.csv")
+        
+        # Check if the file exists
+        if os.path.exists(file_path):
+            existing_df = pd.read_csv(file_path)
+            if not existing_df.equals(dataframe):
+                dataframe.to_csv(file_path, mode='a', index=False, header=False)
+                print(f"DataFrame updated and saved to {file_path}")
+            else:
+                print(f"No update required for {file_path}")
         else:
-            print(f"No update required for {file_path}")
-    else:
-        dataframe.to_csv(file_path, index=False)
-        print(f"DataFrame saved to {file_path}")
+            dataframe.to_csv(file_path, index=False)
+            print(f"DataFrame saved to {file_path}")
 
-# Function to group and sum Quantity by Item, then merge with Subtotal
+    # Function to group and sum Quantity by Item, then merge with Subtotal
 def product_selling(DataFrame):
-    jumlah = DataFrame.groupby('Item')['Quantity'].sum().reset_index()
-    subtotal_df = item_category(DataFrame)
-    result = pd.merge(jumlah, subtotal_df, on='Item', how='left')
-    return result
+        jumlah = DataFrame.groupby('Item')['Quantity'].sum().reset_index()
+        subtotal_df = item_category(DataFrame)
+        result = pd.merge(jumlah, subtotal_df, on='Item', how='left')
+        return result
 
-# Function to find the maximum quantity sold for a product
+    # Function to find the maximum quantity sold for a product
 def best_product(DataFrame):
-    jumlah = DataFrame.groupby('Item')['Quantity'].sum().reset_index()
-    max_quantity = jumlah.loc[jumlah['Quantity'].idxmax()]
-    return max_quantity
+        jumlah = DataFrame.groupby('Item')['Quantity'].sum().reset_index()
+        max_quantity = jumlah.loc[jumlah['Quantity'].idxmax()]
+        return max_quantity
 
-# Function to find the top buyer based on Subtotal
+    # Function to find the top buyer based on Subtotal
 def top_buyer(DataFrame):
-    jumlah = DataFrame.groupby('Customer')['Subtotal'].sum().reset_index()
-    max_subtotal = jumlah.loc[jumlah['Subtotal'].idxmax()]
-    return max_subtotal
+        jumlah = DataFrame.groupby('Customer')['Subtotal'].sum().reset_index()
+        max_subtotal = jumlah.loc[jumlah['Subtotal'].idxmax()]
+        return max_subtotal
 
-# Function to group and sum Subtotal by Customer
+    # Function to group and sum Subtotal by Customer
 def selling_buyer(DataFrame):
-    jumlah = DataFrame.groupby('Customer')['Subtotal'].sum().reset_index()
-    return jumlah
+        jumlah = DataFrame.groupby('Customer')['Subtotal'].sum().reset_index()
+        return jumlah
 
-# Load the sales data
+    # Load the sales data
 file_path = 'C:\\Users\\USER\\git rep\\CashierAndForecasting\\chronicle\\data\\sales_data.csv'
 selling_data = pd.read_csv(file_path)
 
-# Generate DataFrames for each category
+    # Generate DataFrames for each category
 item = item_category(selling_data)
 buyer_all = selling_buyer(selling_data)
 top_buyeerr = top_buyer(selling_data)
 product = product_selling(selling_data)
 best_menu = best_product(selling_data)
 
-# Save DataFrames to CSV files for each category
+    # Save DataFrames to CSV files for each category
 csv_all(item, 'item_category')
 csv_all(buyer_all, 'buyer_all')
 csv_all(product, 'Product_Selling_Detail')
 
-# Testing output
-print(buyer_all)
-print(product)
-print(item)
+    # Testing output
+
 
 
 import tkinter as tk

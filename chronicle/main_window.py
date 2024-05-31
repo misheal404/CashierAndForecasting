@@ -1,18 +1,21 @@
 import customtkinter as ctk
 import tkinter as tk
+from tkinter import ttk
 from tkinter import messagebox, filedialog
 from PIL import Image, ImageTk
 import pandas as pd
 import matplotlib.pyplot as plt
+import matplotlib.dates as mdates
+from matplotlib.figure import Figure
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from reportlab.lib.pagesizes import letter
 from reportlab.pdfgen import canvas
-import os
+import os,sys
 from datetime import datetime
 import subprocess
 
 # Load user data
-users_df = pd.read_csv('chronicle/data/users.csv')  # Ensure this CSV has 'username' and 'password' columns
+users_df = pd.read_csv('chronicle\\data\\users.csv')  # Ensure this CSV has 'username' and 'password' columns
 
 
 class Application(ctk.CTk):
@@ -30,6 +33,9 @@ class Application(ctk.CTk):
         self.emoney_var = tk.StringVar()
 
         self.show_home_page()
+
+    def quit_program(self):
+        sys.exit()
 
     def clear_window(self):
         for widget in self.winfo_children():
@@ -70,7 +76,7 @@ class Application(ctk.CTk):
         report_button.place(relx=0.35, rely=0, anchor='nw')
 
         exit_button = ctk.CTkButton(self, text="Exit", fg_color='#f5efe6', text_color='#000000',
-                                    width=150, height=50, font=("Helvetica", 25), command=self.show_login_page)
+                                    width=150, height=50, font=("Helvetica", 25), command=self.quit_program)
         exit_button.place(relx=0.52, rely=0, anchor='nw')
 
         green_box = ctk.CTkFrame(self, width=450, height=730, fg_color="#1A4D2E")
@@ -159,7 +165,7 @@ class Application(ctk.CTk):
         subtitle.place(relx=0.05, rely=0.45, anchor='nw')
 
         home_button = ctk.CTkButton(self, text="Home", fg_color='#f5efe6', text_color='#000000',
-                                    width=150, height=50, font=("Helvetica", 25), command=self.show_home_page)
+                                    width=150, height=50, font=("Helvetica", 25), command=self.show_choose_menu_page)
         home_button.place(relx=0.05, rely=0, anchor='nw')
 
         cashier_button = ctk.CTkButton(self, text="Cashier", fg_color='#f5efe6', text_color='#000000',
@@ -190,6 +196,8 @@ class Application(ctk.CTk):
         image_label.place(relx=0.588, rely=0.25, anchor='nw')
 
     def show_list_menu_page(self):
+        
+        self.selected_items.clear()
         self.clear_window()
 
         self.frame = ctk.CTkFrame(self, fg_color="#4F6F52", corner_radius=0, width=1280, height=90)
@@ -198,7 +206,7 @@ class Application(ctk.CTk):
         title = ctk.CTkLabel(self.frame, text="LIST MENU", font=("Inter", 40, 'bold'), text_color="#E8DFCA")
         title.place(relx=0.5, rely=0.145, anchor=tk.N)
 
-        back_button = ctk.CTkButton(self.frame, text="<<", fg_color="#4F6F52", text_color="#E8DFCA", font=('Inter', 40), command=self.show_home_page)
+        back_button = ctk.CTkButton(self.frame, text="<<", fg_color="#4F6F52", text_color="#E8DFCA", font=('Inter', 40), command=self.show_choose_menu_page)
         back_button.place(relx=0, rely=0.14, anchor=tk.NW)
 
         done_button = ctk.CTkButton(self.frame, text="DONE", fg_color="#4F6F52", text_color="#E8DFCA", font=('Inter', 40), command=self.summary_page)
@@ -348,6 +356,7 @@ class Application(ctk.CTk):
             no_items_label.place(relx=0.5, rely=0.3, anchor=tk.N)
 
     def payment_page(self):
+        
         self.clear_window()
 
         self.frame = ctk.CTkFrame(self, fg_color="#D1D1D1", corner_radius=0, width=1280, height=90)
@@ -360,15 +369,16 @@ class Application(ctk.CTk):
         back_button.place(relx=0, rely=0.14, anchor=tk.NW)
 
         cash_button = ctk.CTkButton(self, text="CASH", fg_color="#40A578", text_color="#D1D1D1", width=300, height=120,
-                                    corner_radius=25, font=('Inter', 40), anchor='left', command=self.cash_page)
+                                    corner_radius=25, font=('Inter', 40), anchor='center', command=self.cash_page)
         cash_button.place(relx=0.35, rely=0.5, anchor=tk.CENTER)
 
         emoney_button = ctk.CTkButton(self, text="E-MONEY", fg_color="#40A578", text_color="#D1D1D1",
-                                      corner_radius=25, font=('Inter', 40), width=300, height=120, anchor='left', command=self.emoney_page)
+                                      corner_radius=25, font=('Inter', 40), width=300, height=120, anchor='center', command=self.emoney_page)
         emoney_button.place(relx=0.65, rely=0.5, anchor=tk.CENTER)
 
     def cash_page(self):
         self.clear_window()
+        self.emoney_var.set("")
 
         self.frame = ctk.CTkFrame(self, fg_color="#D1D1D1", corner_radius=0, width=1280, height=90)
         self.frame.place(relx=0, rely=0, anchor=tk.NW)
@@ -422,6 +432,7 @@ class Application(ctk.CTk):
 
     def emoney_page(self):
         self.clear_window()
+        self.emoney_var.set("")
 
         self.frame = ctk.CTkFrame(self, fg_color="#D1D1D1", corner_radius=0, width=1280, height=90)
         self.frame.place(relx=0, rely=0, anchor=tk.NW)
@@ -460,10 +471,19 @@ class Application(ctk.CTk):
     def print_nota(self):
         self.clear_window()
 
-        print_button = ctk.CTkButton(self, text="PRINT", fg_color="#4F6F52", text_color="#D1D1D1", font=('Inter', 30), command=self.print_receipt)
-        print_button.place(relx=0.5, rely=0.6, anchor=tk.CENTER)
+        self.frame = ctk.CTkFrame(self, fg_color="#4F6F52", corner_radius=0, width=1280, height=90)
+        self.frame.place(relx=0, rely=0, anchor=tk.NW)
 
-        logout_button = ctk.CTkButton(self, text="logout", fg_color="#4F6F52", text_color="#D1D1D1", font=('Inter', 30), command=self.show_home_page)
+        title = ctk.CTkLabel(self.frame, text="PAYMENT SUCCEESFULL", font=("Inter", 40, 'bold'), text_color="#E8DFCA")
+        title.place(relx=0.5, rely=0.145, anchor=tk.N)
+
+        print_button = ctk.CTkButton(self, text="PRINT NOTA", fg_color="#4F6F52", text_color="#D1D1D1", font=('Inter', 30), command=self.print_receipt)
+        print_button.place(relx=0.5, rely=0.4, anchor=tk.CENTER)
+
+        menu_button = ctk.CTkButton(self, text="MAIN MENU", fg_color="#4F6F52", text_color="#D1D1D1", font=('Inter', 30), command=self.show_choose_menu_page)
+        menu_button.place(relx=0.5, rely=0.6, anchor=tk.CENTER)
+
+        logout_button = ctk.CTkButton(self, text="LOG OUT", fg_color="#ff0000", text_color="#D1D1D1", font=('Inter', 30), command=self.show_login_page)
         logout_button.place(relx=0.5, rely=0.8, anchor=tk.CENTER)
 
         
@@ -488,13 +508,15 @@ class Application(ctk.CTk):
         c.drawImage(logo_path, 50, 700, width=100, height=100)
 
         c.drawString(180, 750, "THE CHRONICLE")
-        c.drawString(180, 735, "Gd.1 Fakultas Teknik No. 1304")
-        c.drawString(180, 720, "Solo, Indonesia")
-        c.drawString(180, 705, "==============================")
+        c.drawString(180, 735, "Gd.1 Lt.3 No.1304")
+        c.drawString(180, 720, "Teknik Industri,Fakultas Teknik")
+        c.drawString(180, 705, "="*40)
+        now = datetime.now()
+        c.drawString(180, 690, f"Datetime: {timestamp}")
 
         customer_name = self.customer_var.get()
         c.drawString(180, 675, f"Customer: {customer_name}")
-        c.drawString(180, 660, "------------------------------")
+        c.drawString(180, 660, "-"*70)
 
         row_height = 640
         for item_name, (name, price, quantity, total) in self.selected_items.items():
@@ -502,30 +524,47 @@ class Application(ctk.CTk):
             c.drawString(400, row_height, f"Rp.{total:,.0f}")
             row_height -= 15
 
-        c.drawString(180, row_height, "------------------------------")
+        c.drawString(180, row_height, "-"*70)
 
         total_amount = sum(total for _, _, _, total in self.selected_items.values())
         c.drawString(180, row_height - 20, f"Total: Rp.{total_amount:,.0f}")
 
         payment_method = "Cash" if self.emoney_var.get() == "" else "E-Money"
-        c.drawString(180, row_height - 35, f"Payment Method: {payment_method}")
+        
 
         if payment_method == "Cash":
             cash_amount = float(self.cash_var.get())
             change = cash_amount - total_amount
-            c.drawString(180, row_height - 50, f"Change: Rp.{change:,.0f}")
+            c.drawString(180, row_height - 40, f"Change: Rp.{change:,.0f}")
+            c.drawString(180, row_height - 60, f"Payment Method: {payment_method}")
 
         
 
         if payment_method.startswith("E-Money"):
             emoney_details = self.emoney_var.get()
             c.drawString(180, row_height - 65, f"E-Money Type: {emoney_details}")
+            c.drawString(180, row_height - 40, f"Payment Method: {payment_method}")
+
+        c.drawString(180, row_height-90, "Coffee cheers to brew-tiful souls like you!")
 
         c.save()
         subprocess.Popen(['start', receipt_filename], shell=True)
         messagebox.showinfo("Receipt Printed", f"Receipt has been printed successfully!\nFile saved as: {receipt_filename}")
         self.save_to_csv(customer_name, total_amount, payment_method)
-
+    def csv_all(dataframe, file_name):
+        file_path = os.path.join("C:\\Users\\USER\\git rep\\CashierAndForecasting\\chronicle\\data", f"{file_name}.csv")
+        
+        # Check if the file exists
+        if os.path.exists(file_path):
+            existing_df = pd.read_csv(file_path)
+            if not existing_df.equals(dataframe):
+                dataframe.to_csv(file_path, mode='a', index=False, header=False)
+                print(f"DataFrame updated and saved to {file_path}")
+            else:
+                print(f"No update required for {file_path}")
+        else:
+            dataframe.to_csv(file_path, index=False)
+            print(f"DataFrame saved to {file_path}")
     def save_to_csv(self, customer_name, total_amount, payment_method):
         folder_name = 'chronicle'
         if not os.path.exists(folder_name):
@@ -554,46 +593,38 @@ class Application(ctk.CTk):
             df.to_csv(data_filename, mode='a', header=False, index=False)
         else:
             df.to_csv(data_filename, mode='w', header=True, index=False)
+        
+        file_path = 'C:\\Users\\USER\\git rep\\CashierAndForecasting\\chronicle\\data\\sales_data.csv'
+        selling_data = pd.read_csv(file_path)
 
+        jumlah_ietem = selling_data.groupby('Item')['Subtotal'].sum().reset_index()
+        jumlah = selling_data.groupby('Item')['Quantity'].sum().reset_index()
+        subtotal_df = jumlah_ietem
+        result = pd.merge(jumlah, subtotal_df, on='Item', how='left')
+
+        jumlah_buyer = selling_data.groupby('Customer')['Subtotal'].sum().reset_index()
+        def csv_all(dataframe, file_name):
+            file_path = os.path.join("C:\\Users\\USER\\git rep\\CashierAndForecasting\\chronicle\\data", f"{file_name}.csv")
+            
+            # Check if the file exists
+            if os.path.exists(file_path):
+                existing_df = pd.read_csv(file_path)
+                if not existing_df.equals(dataframe):
+                    dataframe.to_csv(file_path, mode='a', index=False, header=False)
+                    print(f"DataFrame updated and saved to {file_path}")
+                else:
+                    print(f"No update required for {file_path}")
+            else:
+                dataframe.to_csv(file_path, index=False)
+                print(f"DataFrame saved to {file_path}")
+
+
+        csv_all(jumlah_buyer, 'buyer_all')
+        csv_all(result, 'Product_Selling_Detail')
         messagebox.showinfo("Data Saved", f"Sales data has been saved successfully!\nFile saved as: {data_filename}")
 
-    def display_sales_data():
-        try:
-            # Membaca file CSV
-            sales_df = pd.read_csv('sales_data.csv')
-            
-            # Menampilkan data
-            print("Sales Data:")
-            print(sales_df.to_string(index=False))
-            
-        except FileNotFoundError:
-            print("File data_sales.csv not found.")
-        except Exception as e:
-            print(f"An error occurred: {str(e)}")
-
-    # Memanggil fungsi untuk menampilkan data
-    
-
-
-
-    
-
-    
-
         
-
     
-
-        
-
-
-    
-
-    
-        
-        
-
-        
 
 
 
@@ -601,39 +632,93 @@ class Application(ctk.CTk):
     def show_report_page(self):
         self.clear_window()
 
-        label = ctk.CTkLabel(self, text="Laporan Penjualan", font=("Arial", 24))
-        label.place(relx=0.5, rely=0.2, anchor=tk.CENTER)
+        self.frame = ctk.CTkFrame(self, fg_color="#4F6F52", corner_radius=0, width=1280, height=90)
+        self.frame.place(relx=0, rely=0, anchor=tk.NW)
 
-        data_penjualan_button = ctk.CTkButton(self, text="Data Penjualan", command=self.display_sales_data)
+        title = ctk.CTkLabel(self.frame, text="SELLING REPORT", font=("Inter", 40, 'bold'), text_color="#E8DFCA")
+        title.place(relx=0.5, rely=0.145, anchor=tk.N)
+
+        back_button = ctk.CTkButton(self.frame, text="<<", fg_color="#4F6F52", text_color="#E8DFCA", font=('Inter', 40), command=self.show_choose_menu_page)
+        back_button.place(relx=0, rely=0.14, anchor=tk.NW)
+
+        data_penjualan_button = ctk.CTkButton(self, text="Data Penjualan", command=self.show_data_penjualan_page)
         data_penjualan_button.place(relx=0.5, rely=0.3, anchor=tk.CENTER)
 
-        grafik_button = ctk.CTkButton(self, text="Grafik", command=self.show_grafik_page)
-        grafik_button.place(relx=0.5, rely=0.4, anchor=tk.CENTER)
+        top_buyer = ctk.CTkButton(self, text="Top Buyer", command=self.top_buyer)
+        top_buyer.place(relx=0.5, rely=0.4, anchor=tk.CENTER)
 
-        back_button = ctk.CTkButton(self, text="Back", command=self.show_choose_menu_page)
-        back_button.place(relx=0.5, rely=0.5, anchor=tk.CENTER)
 
     def show_data_penjualan_page(self):
         self.clear_window()
 
-        label = ctk.CTkLabel(self, text="Data Penjualan", font=("Arial", 24))
-        label.place(relx=0.5, rely=0.2, anchor=tk.CENTER)
+        self.frame = ctk.CTkFrame(self, fg_color="#4F6F52", corner_radius=0, width=1280, height=90)
+        self.frame.place(relx=0, rely=0, anchor=tk.NW)
+
+
+        title = ctk.CTkLabel(self.frame, text="Data Penjualan", font=("Inter", 40, 'bold'), text_color="#E8DFCA")
+        title.place(relx=0.5, rely=0.145, anchor=tk.N)
+
+        back_button = ctk.CTkButton(self.frame, text="<<", fg_color="#4F6F52", text_color="#E8DFCA", font=('Inter', 40), command=self.show_choose_menu_page)
+        back_button.place(relx=0, rely=0.14, anchor=tk.NW)
 
         # Add your data display here
+        ProductSellingDetailWindow(self, 'chronicle\data\Product_Selling_Detail.csv')       
 
-        back_button = ctk.CTkButton(self, text="Back", command=self.show_report_page)
-        back_button.place(relx=0.5, rely=0.3, anchor=tk.CENTER)
-
-    def show_grafik_page(self):
+    def top_buyer(self):
         self.clear_window()
 
-        label = ctk.CTkLabel(self, text="Grafik Penjualan", font=("Arial", 24))
-        label.place(relx=0.5, rely=0.2, anchor=tk.CENTER)
+        self.frame = ctk.CTkFrame(self, fg_color="#4F6F52", corner_radius=0, width=1280, height=90)
+        self.frame.place(relx=0, rely=0, anchor=tk.NW)
+
+        title = ctk.CTkLabel(self.frame, text="Top Buyer", font=("Inter", 40, 'bold'), text_color="#E8DFCA")
+        title.place(relx=0.5, rely=0.145, anchor=tk.N)
 
         # Add your graph display here
 
-        back_button = ctk.CTkButton(self, text="Back", command=self.show_report_page)
-        back_button.place(relx=0.5, rely=0.3, anchor=tk.CENTER)
+        back_button = ctk.CTkButton(self.frame, text="<<", fg_color="#4F6F52", text_color="#E8DFCA", font=('Inter', 40), command=self.top_graph)
+        back_button.place(relx=0, rely=0.14, anchor=tk.NW)
+        
+class ProductSellingDetailWindow(tk.Toplevel):
+    def __init__(self, master, file_path):
+        super().__init__(master)
+        
+        self.title("Product Selling Detail")
+        self.geometry("800x600")
+        
+        self.df = pd.read_csv(file_path)
+        self.create_widgets()
+        self.display_table()
+        self.display_graph()
+
+    def create_widgets(self):
+        self.table_frame = ttk.Frame(self)
+        self.table_frame.pack(fill="both", expand=True, padx=20, pady=20)
+        
+        self.graph_frame = ttk.Frame(self)
+        self.graph_frame.pack(fill="both", expand=True, padx=20, pady=20)
+    
+    def display_table(self):
+        cols = list(self.df.columns)
+        self.tree = ttk.Treeview(self.table_frame, columns=cols, show='headings')
+        for col in cols:
+            self.tree.heading(col, text=col)
+            self.tree.column(col, width=100)
+        
+        for _, row in self.df.iterrows():
+            self.tree.insert("", "end", values=list(row))
+        
+        self.tree.pack(fill="both", expand=True)
+
+    def display_graph(self):
+        fig, ax = plt.subplots()
+        ax.bar(self.df['Item'], self.df['Subtotal'])
+        ax.set_xlabel('Item')
+        ax.set_ylabel('Subtotal')
+        ax.set_title('Subtotal by Item')
+        
+        self.canvas = FigureCanvasTkAgg(fig, master=self.graph_frame)
+        self.canvas.draw()
+        self.canvas.get_tk_widget().pack(fill="both", expand=True)
 
 
 if __name__ == "__main__":
