@@ -1,0 +1,48 @@
+Customer,Item,Price,Quantity,Subtotal,Payment Method,Date
+alex,Latte,21000,3,63000,E-Money,2024-05-30 00:08:06
+alex,Latte,21000,2,42000,E-Money,2024-05-30 00:10:11
+alex,Latte,21000,2,42000,E-Money,2024-05-30 00:10:11
+alex,Americano,21000,1,21000,E-Money,2024-05-30 00:22:05
+alex,Latte,21000,3,63000,E-Money,2024-05-31 00:08:06
+alex,Latte,21000,2,42000,E-Money,2024-05-31 00:10:11
+alex,Americano,21000,1,21000,E-Money,2024-05-31 00:22:05
+alex,Espresso,20000,1,20000,E-Money,2024-05-31 00:22:05
+alex,Latte,21000,1,21000,E-Money,2024-05-31 00:22:05
+alex,Cappuccino,24000,1,24000,E-Money,2024-05-31 00:22:05
+alex,Banana Cake,30000,1,30000,E-Money,2024-05-31 00:22:05
+alex,Tuna Sandwich,35000,1,35000,E-Money,2024-05-31 00:22:05
+alex,Americano,21000,1,21000,E-Money,2024-05-31 00:22:21
+alex,Espresso,20000,1,20000,E-Money,2024-05-31 00:22:21
+alex,Latte,21000,1,21000,E-Money,2024-05-31 00:22:21
+alex,Cappuccino,24000,1,24000,E-Money,2024-05-31 00:22:21
+alex,Banana Cake,30000,1,30000,E-Money,2024-05-31 00:22:21
+alex,Tuna Sandwich,35000,1,35000,E-Money,2024-05-31 00:22:21
+sanip,Latte,21000,4,84000,Cash,2024-05-31 00:28:00
+sanip,Cappuccino,24000,1,24000,Cash,2024-05-31 00:28:00
+sanip,Espresso,20000,1,20000,Cash,2024-05-31 00:28:00
+sanip,Americano,21000,1,21000,Cash,2024-05-31 00:28:00
+sanip,Banana Cake,30000,1,30000,Cash,2024-05-31 00:28:00
+sanip,Tuna Sandwich,35000,1,35000,Cash,2024-05-31 00:28:00
+sanip,Vanilla Cake,30000,1,30000,Cash,2024-05-31 00:28:00
+sanip,Chicken Sandwich,32000,1,32000,Cash,2024-05-31 00:28:00
+sanip,Espresso,20000,1,20000,E-Money,2024-05-31 00:35:14
+sanip,Americano,21000,1,21000,E-Money,2024-05-31 00:35:14
+sanip,Latte,21000,1,21000,E-Money,2024-05-31 00:35:14
+sanip,Cappuccino,24000,1,24000,E-Money,2024-05-31 00:35:14
+sanip,Banana Cake,30000,1,30000,E-Money,2024-05-31 00:35:14
+sanip,Tuna Sandwich,35000,1,35000,E-Money,2024-05-31 00:35:14
+sanip,Vanilla Cake,30000,1,30000,E-Money,2024-05-31 00:35:14
+sanip,Chicken Sandwich,32000,1,32000,E-Money,2024-05-31 00:35:14
+sanip,Butter Croissant,24000,1,24000,E-Money,2024-05-31 00:35:14
+sanip,Almond Croissant,27000,1,27000,E-Money,2024-05-31 00:35:14
+sanip,Latte,21000,1,21000,E-Money,2024-05-31 00:36:57
+sanip,Latte,21000,2,42000,E-Money,2024-05-31 00:37:32
+sanip,Latte,21000,2,42000,E-Money,2024-05-31 00:37:48
+alex,Cappuccino,24000,1,24000,E-Money,2024-05-31 00:45:59
+tiok,Latte,21000,1,21000,E-Money,2024-05-31 00:46:43
+tiok,Latte,21000,1,21000,E-Money,2024-05-31 00:51:42
+tiok,Latte,21000,1,21000,Cash,2024-05-31 00:52:28
+tiok,Latte,21000,1,21000,Cash,2024-05-31 01:03:05
+tiok,Latte,21000,1,21000,Cash,2024-05-31 01:04:20
+tiok,Latte,21000,1,21000,E-Money,2024-05-31 01:04:53
+sanip,Vanilla Cake,30000,3,90000,E-Money,2024-05-31 19:37:01
