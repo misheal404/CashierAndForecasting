@@ -78,6 +78,7 @@ from tkinter import ttk
 import pandas as pd
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+#1 1 1 1  1 1 1 1 11 1   P R O D U C T
 
 class MainApplication(tk.Tk):
     def __init__(self):
@@ -144,7 +145,7 @@ if __name__ == "__main__":
     app.mainloop()
 
 
-
+#2 2 2 2 2 2 2 2 2 m2  M O N T H
 # Load the CSV data
 sales_data = pd.read_csv('C:\\Users\\USER\\git rep\\CashierAndForecasting\\chronicle\\data\\sales_data.csv')
 
@@ -173,3 +174,64 @@ def plot_monthly_sales():
 
 plot_monthly_sales()
 
+
+# 3 3 3 3 3 3 3 3 3 3 3 3  T O P  B U Y E R
+import pandas as pd
+import tkinter as tk
+from tkinter import ttk
+from matplotlib.figure import Figure
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+
+# Load the CSV file
+file_path = 'C:\\Users\\USER\\git rep\\CashierAndForecasting\\chronicle\\data\\buyer_all.csv'  # Update this path
+df = pd.read_csv(file_path)
+
+# Initialize the main window
+root = tk.Tk()
+root.title("Customer Subtotals")
+
+# Create a frame for the table and the plot
+frame = tk.Frame(root)
+frame.pack(fill=tk.BOTH, expand=True)
+
+# Create a Treeview widget
+tree = ttk.Treeview(frame)
+tree.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
+
+# Define the columns
+tree["columns"] = list(df.columns)
+tree["show"] = "headings"
+
+# Create the column headings
+for col in tree["columns"]:
+    tree.heading(col, text=col)
+
+# Add the data to the Treeview
+for index, row in df.iterrows():
+    tree.insert("", "end", values=list(row))
+
+# Create a canvas for the plot
+canvas = tk.Canvas(frame)
+canvas.pack(side=tk.RIGHT, fill=tk.BOTH, expand=True)
+
+# Create a Figure
+fig = Figure(figsize=(6, 4), dpi=100)
+ax = fig.add_subplot(111)
+
+# Plot the data
+customers = df['Customer']
+subtotals = df['Subtotal']
+ax.bar(customers, subtotals, color='skyblue')
+
+# Add title and labels
+ax.set_title('Customer Subtotals')
+ax.set_xlabel('Customer')
+ax.set_ylabel('Subtotal')
+
+# Create a canvas to display the figure
+figure_canvas = FigureCanvasTkAgg(fig, master=canvas)
+figure_canvas.draw()
+figure_canvas.get_tk_widget().pack(fill=tk.BOTH, expand=True)
+
+# Start the Tkinter event loop
+root.mainloop()
