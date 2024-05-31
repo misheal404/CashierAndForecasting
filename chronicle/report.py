@@ -1,5 +1,10 @@
 import pandas as pd
 import os
+import pandas as pd
+import matplotlib.pyplot as plt
+import matplotlib.dates as mdates
+import tkinter as tk
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 
 # Function to group and sum Subtotal by Item
 def item_category(DataFrame):
@@ -68,9 +73,8 @@ print(product)
 print(item)
 
 
-
 import tkinter as tk
-from tkinter import ttk, filedialog, messagebox
+from tkinter import ttk
 import pandas as pd
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
@@ -89,9 +93,9 @@ class MainApplication(tk.Tk):
         self.product_selling_detail_button.pack(pady=10)
     
     def open_product_selling_detail(self):
-        file_path = filedialog.askopenfilename(filetypes=[("CSV files", "*.csv")], initialdir=".", title="Select Product_Selling_Detail.csv")
-        if file_path:
-            ProductSellingDetailWindow(self, file_path)
+        # Fixed file path
+        file_path = 'C:\\Users\\USER\\git rep\\CashierAndForecasting\\chronicle\\data\\Product_Selling_Detail.csv'
+        ProductSellingDetailWindow(self, file_path)
 
 class ProductSellingDetailWindow(tk.Toplevel):
     def __init__(self, master, file_path):
@@ -138,3 +142,34 @@ class ProductSellingDetailWindow(tk.Toplevel):
 if __name__ == "__main__":
     app = MainApplication()
     app.mainloop()
+
+
+
+# Load the CSV data
+sales_data = pd.read_csv('C:\\Users\\USER\\git rep\\CashierAndForecasting\\chronicle\\data\\sales_data.csv')
+
+# Process the data
+sales_data['Date'] = pd.to_datetime(sales_data['Date'])
+sales_data['YearMonth'] = sales_data['Date'].dt.to_period('M')
+monthly_sales = sales_data.groupby('YearMonth')['Subtotal'].sum().reset_index()
+monthly_sales['YearMonth'] = monthly_sales['YearMonth'].dt.to_timestamp()
+
+# Function to plot data using Tkinter
+def plot_monthly_sales():
+    root = tk.Tk()
+    root.title("Monthly Sales Data")
+    fig, ax = plt.subplots(figsize=(10, 5))
+    ax.plot(monthly_sales['YearMonth'], monthly_sales['Subtotal'], marker='o', linestyle='-', color='b')
+    ax.set_title('Monthly Sales Data')
+    ax.set_xlabel('Month')
+    ax.set_ylabel('Total Sales')
+    ax.xaxis.set_major_formatter(mdates.DateFormatter('%Y-%m'))
+    ax.xaxis.set_major_locator(mdates.MonthLocator())
+    fig.autofmt_xdate()
+    canvas = FigureCanvasTkAgg(fig, master=root)
+    canvas.draw()
+    canvas.get_tk_widget().pack()
+    root.mainloop()
+
+plot_monthly_sales()
+
